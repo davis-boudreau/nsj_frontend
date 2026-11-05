@@ -1,0 +1,127 @@
+.learnmoreleftcontainer {
+  width: 100%;
+  /* Border */
+  overflow: hidden;
+
+}
+  
+.learnmorerightcontainer {
+  display: flex;
+  flex-direction: column;
+  max-width: 30vw;
+  min-width: 30vw;
+  padding: calc(var(--container-margins)* 2);
+  text-align: center;
+  align-items: center;
+}
+
+.learnmoresubcontainer {
+  display:grid;
+
+}
+
+#learnmoreMap {
+  width: 100%;
+  height: 46vw;
+  display: block; /* Prevents extra space below the image */
+  object-fit: contain; /* Optional: ensures the entire image is visible within the container */
+}
+
+.learnmoresubheadlinecontainer {
+  display: flex;
+  flex-direction: column;
+  text-align: left;
+  align-items: center;
+}
+
+.learnmoreheadline {
+  font-size: 2rem;
+  font-weight: 700;
+  line-height: 1.5rem;
+  margin-bottom: calc(1.4 * var(--container-margins));
+  text-align: center;
+  
+}
+
+.learnmoresubheadline {
+  font-size: 1.75rem;
+  font-weight: 700;
+  color: var(--primary-color);
+  line-height: 2rem;
+  text-align: left;
+  
+  
+}
+
+.learnmoretagline {
+  font-size: 1.1rem;
+  font-weight: 600;
+  line-height: 1.5rem;
+}
+
+ 
+#learnmoreMap .leaflet-tile-pane {
+  filter: brightness(100%)  /* Keep original brightness */
+          contrast(110%)     /* Slightly increase contrast for definition */
+          hue-rotate(230deg)   /* Shift towards a cleaner blue for the sea */
+          saturate(240%)      /* Increase saturation for richer colors */
+          sepia(50%)         /* Apply a moderate sepia for land tone */
+          hue-rotate(170deg);  /* Adjust hue to balance blue/green */
+}
+
+.leaflet-tile-pane path {
+  stroke: #000000;
+  stroke-width: 1px;
+  fill: none;
+}
+
+.leaflet-control-attribution {
+  font-weight: 600;
+}
+
+.leaflet-control-custom button {
+  display: block;
+  width: calc(1rem + 2vw); /* Adjust width based on viewport */
+  height: calc(1rem + 2vw); /* Adjust height based on viewport */
+  padding: 0;
+  margin-bottom: calc(.2rem);;
+  font-family: inherit;
+  font-size: calc(0.75rem + 0.55vw); /* Scalable font size */
+  font-weight: 700;
+  color: var(--text-color);
+  text-align: center;
+  text-decoration: none;
+  background-color: var(--background-color);
+  cursor: pointer;
+  /* Border */
+  border-style: solid;
+  border-radius: calc(0.5rem + 0.25vw); /* Scalable border radius */
+  border-color: var(--primary-color); 
+  border-width: calc(0.25rem + 0.1vw); /* Scalable border width */
+  }
+
+.leaflet-control-custom button:hover {
+    background-color: var(--primary-color); /* Change background color on hover */
+    color: var(--background-color); /* Change text color on hover */
+    border-color: var(--text-color); 
+}
+    
+@media screen and (max-width: 600px) {
+  .learnmorecontainer {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .learnmoreleftcontainer {
+    display: flex;
+    flex-direction: column;
+    max-width: 85vw;
+    min-width: 85vw;
+  
+  }
+  
+  #learnmoreMap {
+    width: 100%;
+    align-items: center;
+  }
+}

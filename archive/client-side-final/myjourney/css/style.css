@@ -1,0 +1,508 @@
+html, body {
+    height: 100%;
+    min-height: 100vh;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    font-size: var(--font-size-base);
+    font-weight: var(--font-weight);
+    overflow-x: hidden;
+}
+
+#myjourney {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    min-height: 100vh; /* ensures full viewport height on large screens */
+    flex-grow: 1;
+    background-image: url('../images/cabot-trail.jpg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    min-height: calc(100vh - var(--header-height) - var(--footer-height));
+}
+
+#myjourney::before {
+    content: ''; /* Required for the pseudo-element */
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0; /* Ensure it covers the entire main element */
+    background-color: rgba(0, 0, 0, 0.4); /* Apply the opacity effect here */
+    z-index: -0; /* Make sure it's behind content */
+}
+
+/* Variables */
+:root {
+    --primary-color: #3C6FA5;
+    --secondary-color: #0F427A;
+    --text-color: #031427;
+    --alt-text-color: #FFFF;
+    --background-color: #FFFF;
+    --font-size-base: 16px;
+    --font-weight: 400;
+    --border-radius: 1.5rem;
+    --container-padding: 0.5rem;
+    --container-webpart-padding: 1rem;
+    --container-margins: 0.5rem;
+    --nav-toggler-icon-width: 1.5rem;
+    --container-webpart-margins: 1rem;
+    --smallest-screen-width: 328px;
+    --logo-width: 150px;
+}
+
+header {
+    background-color: var(--background-color);
+    font-weight: 600;
+    width: 100%;
+}
+
+.navbar {
+    align-items: center;
+    position: relative;
+    z-index: 3;
+}
+
+.navbar-collapse {
+    text-align: left;
+}
+
+.nav-item {
+    white-space: nowrap;
+    margin: var(--container-margins);
+}
+
+.navbar-toggler-icon {
+    width: var(--nav-toggler-icon-width);
+    height: var(--nav-toggler-icon-height);
+}
+
+.logo {
+    width: var(--logo-width);
+    position: relative;
+    z-index: 1000;
+    margin: var(--container-margins);
+}
+
+
+
+#main-content-wrapper {
+    display: flex;
+    flex-wrap: wrap;
+    padding: var(--container-padding);
+    align-items: flex-start;
+    justify-content: flex-start;
+    width: 100%;
+}
+
+#left-container {
+    flex: 0 1 var(--smallest-screen-width);
+    margin: var(--container-webpart-margins);
+}
+
+#right-container {
+    flex: 1 1 auto;
+    display: flex;
+    align-items: flex-start;
+    justify-content: flex-start;
+    min-width: var(--smallest-screen-width);
+    margin: var(--container-webpart-margins) 0;
+    max-width: 40vw;
+}
+
+#webpart {
+    background: var(--background-color);
+    border-radius: var(--border-radius);
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+    padding: var(--container-webpart-padding);
+    font-weight: 600;
+    width: 100%;
+    max-width: var(--smallest-screen-width);
+    position: relative;
+}
+
+#map {
+    width: 100%;
+    height: 400px;
+    min-height: var(--smallest-screen-width);
+    border-radius: var(--border-radius);
+}
+
+.title {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: var(--secondary-color);
+    margin-bottom: var(--container-margins);
+    text-align: center;
+}
+
+hr {
+    width: 100%;
+    border: none;
+    height: 1px;
+    background-color: var(--text-color);
+    margin: 1rem 0;
+}
+
+.form-label {
+    text-align: left;
+    margin-bottom: 0.25rem;
+    display: block;
+}
+
+.form-control {
+    background: transparent;
+    border: 1px solid var(--text-color);
+    border-radius: 8px;
+    box-shadow: none;
+    width: 100%;
+    padding: 0.5rem 0.75rem;
+    margin-bottom: 0.75rem;
+    box-sizing: border-box;
+}
+
+.form-control:focus {
+    box-shadow: none;
+    border-color: var(--primary-color);
+}
+
+.day-selector {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 0.25rem;
+    margin-top: 0.5rem;
+}
+
+.form-check {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 0;
+}
+
+.form-check-input {
+    width: 1.2rem;
+    height: 1.2rem;
+    margin-right: 0.5rem;
+    border: 1px solid var(--text-color);
+}
+
+.form-check-input:checked {
+    background-color: var(--primary-color);
+    border-color: var(--text-color);
+}
+
+.form-check-label {
+    color: #333;
+    margin-left: 0;
+}
+
+.btn-custom {
+    background-color: var(--primary-color);
+    color: var(--alt-text-color);
+    border: none;
+    padding: 0.75rem 1.5rem;
+    font-size: var(--font-size-base);
+    border-radius: var(--border-radius);
+    width: 100%;
+    max-width: 200px;
+    transition: background-color 0.3s ease-in-out;
+    text-align: center;
+    margin-top: var(--container-margins);
+    margin-bottom: var(--container-margins);
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.btn-custom:hover {
+    background-color: var(--secondary-color);
+    color: var(--alt-text-color);
+}
+
+.btn-custom-outline {
+    background-color: transparent;
+    color: var(--primary-color);
+    border: 2px solid var(--primary-color);
+}
+
+.btn-custom-outline:hover {
+    background-color: var(--primary-color);
+    color: var(--text-color);
+}
+
+.hero {
+    flex: 1; /* allows hero to take up remaining space inside main */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: url('../images/cabot-trail.jpg') no-repeat center center;
+    background-size: cover;
+    position: relative;
+}
+
+.home {
+    font-size: calc(1rem + 1vw);
+}
+
+
+.hero::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    background-color: rgba(0, 0, 0, 0.4); /* Adjust opacity as needed */
+    z-index: 1; /* Dark overlay */
+}
+
+.hero .container {
+    position: relative;
+    z-index: 2; /* Ensures content appears above the overlay */
+}
+
+.size {
+    background: white;
+    padding: 2rem;
+    border-radius: 10px;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 400px;
+    text-align: center;
+    position: relative;
+    z-index: 2; /* Ensures form is above the overlay */
+}
+
+.profile {
+    border: none;
+    width: 140px; 
+    border-radius: 10%; 
+    margin-bottom: 15px;
+    background-color: #fff;
+ }
+
+.logo {
+    width: 150px; 
+    margin-bottom: 20px;
+ }
+
+/* Shared button styles */
+.btn {
+    border-radius: 30px;
+    border: none;
+    padding: 15px 50px;
+    display: inline-block;
+    margin-top: 20px;
+    font-size: 1.3rem;
+    width: auto;
+    color: white;
+    font-weight: 100;
+    text-decoration: none;
+}
+
+.btn-pry {
+    background-color: #1B4159;
+}
+
+.btn-second {
+    background-color: #0F427A;
+}
+
+/* Hover styles */
+.btn-pry:hover {
+    background-color: #333;
+}
+
+.btn-second:hover {
+    background-color: #fff;
+    color: #0F427A;
+}
+
+.btn-custom {
+    background-color: var(--primary-color);
+    color: var(--alt-text-color);
+    border: none;
+    padding: 0.75rem 1.5rem;
+    font-size: var(--font-size-base);
+    border-radius: var(--border-radius);
+    width: 100%;
+    max-width: 200px;
+    transition: background-color 0.3s ease-in-out;
+    text-align: center;
+    margin-top: var(--container-margins);
+    margin-bottom: var(--container-margins);
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+ }
+ 
+ .btn-custom:hover {
+    background-color: var(--secondary-color);
+    color: var(--alt-text-color);
+ }
+ 
+ .btn-custom-outline {
+    background-color: transparent;
+    color: var(--primary-color);
+    border: 2px solid var(--primary-color);
+ }
+ 
+ .btn-custom-outline:hover {
+    background-color: var(--primary-color);
+    color: var(--text-color);
+ }
+ 
+
+#footer {
+    background-color: #0F427A;
+    color: white;
+    padding: 1rem;
+    text-align: center;
+}
+
+  /* Remove text decoration from footer links */
+footer a {
+    color: white;
+    text-decoration: none;
+    transition: color 0.3s ease; /* Smooth transition for color */
+}
+
+footer a:hover {
+    color: #66abf5 !important; /* Ensure color changes on hover */
+}
+  
+.button-container {
+    display: flex;
+    gap: 10px; /* Adjust spacing between buttons */
+ }
+/* Custom primary button */
+.btn-custom, .btn-custom-sec, .btn-custom-danger, .btn-custom-outline {
+   background-color: #0F427A; /* Default color for primary button */
+   color: white; /* Text color */
+   border: none;
+   padding: 10px 20px;
+   font-size: 16px;
+   border-radius: 20px;
+   width: 200px; /* Consistent width for all buttons */
+   transition: background-color 0.3s ease-in-out;
+   text-align: center; /* Ensure text is centered */
+   margin-top: 20px;
+}
+
+.btn-custom {
+   background-color: #0F427A; /* Hover color for primary button */
+   color: white;
+}
+
+/* Hover effect */
+.btn-custom:hover {
+   background-color: #333; /* Hover color for primary button */
+   color: white;
+}
+
+.btn-custom-outline {
+   background-color: white; 
+   color: #0F427A;
+   border: 2px solid #0F427A; /* Outline color */
+}
+
+.btn-custom-outline:hover {
+   background-color: #0F427A; 
+   color: white;
+}
+
+.btn-custom-sec {
+   background-color: #0F427A; /* Color for secondary button */
+   margin-top: 20px;
+}
+
+.btn-custom-sec:hover {
+   background-color: #0d2a3b; /* Hover color for secondary button */
+   color: white;
+}
+
+.btn-custom-danger {
+   background-color: #920202; /* Color for danger button */
+}
+
+.btn-custom-danger:hover {
+   background-color: #ce4949; /* Hover color for danger button */
+   color: white;
+}
+
+form {
+    width: 100%;
+}
+
+input.form-control {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 15px;
+}
+
+.invalid-feedback {
+    font-size: 0.95rem; /* Smaller size, adjust as needed */
+    color: #dc3545; /* Optional: ensure the red color is clear */
+}
+
+.more-info {
+    width: 100%;
+    margin: 0 auto;
+    text-align: left;
+}
+
+.info-row,
+.info-rows {
+    padding: 5px 20px;
+    border-bottom: 1px solid #ddd;
+    display: flex;
+    justify-content: space-between;
+}
+
+.info-row span,
+.info-rows span {
+    font-weight: bold;
+}
+
+
+/* Responsive Layout */
+@media (max-width: 768px) {
+    #main {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    #left-container,
+    #right-container {
+        width: var(--smallest-screen-width);
+        margin: var(--container-margins);
+    }
+
+    #map {
+        height: var(--smallest-screen-width);
+        width: 100vw;
+    }
+
+    .footer {
+        text-align: left;
+    }
+
+    .footer-item {
+        text-align: center;
+    }
+}
+
+@media (min-width: 992px) {
+    .footer {
+        text-align: left;
+    }
+
+    .footer-item {
+        margin-bottom: 0;
+        text-align: left;
+    }
+}

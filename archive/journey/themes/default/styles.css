@@ -1,0 +1,34 @@
+/* CSS Variables */
+:root {
+    /* Color Palette Selection*/
+    --primary-color: #004477;
+    --secondary-color: #1b5c8c;
+    --accent-color: #FFC90E;
+    --background-color: #FFFF;
+    --alt-background-color: var(--secondary-color);
+    /* Topography Control */
+    --font-family: "Poppins";
+    --text-color: #34343C;
+    --alt-text-color: #fff;
+    --font-weight: 400;
+    
+    --min-font-size: 0.5rem;
+    --max-font-size: 1.5rem;
+    --scaling-factor: .75vw;
+  
+    /* Container Control */
+    --border-radius: 1rem;
+    --container-padding: 0.5rem;
+    --container-margins: 0.5rem;
+    /* TO DO: Move to Webpart */
+    --padding: 1rem;
+    --margin: 1rem;
+   /* Asset Control */
+    --nav-toggler-icon-width: 1rem;
+    --logo-width: calc(2rem + 14vw);
+  }
+  
+.bodycontainer {
+    width: 100%;
+}
+

@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Responsive Mock Page</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap"
+        rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+    <div id="header"></div>
+
+    <main id="myjourney">
+        <div id="main-content-wrapper" class="container-fluid d-flex justify-content-center align-items-center">
+            <div id="left-container">
+                <div id="webpart">
+                    <div class="title">My NSCC Journey</div>
+                    <hr>
+                    <form id="panel-1" style="display: block;">
+                        <div class="mb-3">
+                            <label for="origin_geoname" class="form-label">Leaving From</label>
+                            <input type="text" class="form-control" id="origin_geoname" placeholder="Enter your Town">
+                        </div>
+                        <div class="mb-3">
+                            <label for="origin_departure" class="form-label">Leaving Time and Days</label>
+                            <input type="time" class="form-control" id="origin_departure">
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label">Select Departure Days</label>
+                            <div class="day-selector">
+                                <div><input class="form-check-input" type="checkbox" id="Mon"><label class="form-check-label" for="Mon">Mon</label></div>
+                                <div><input class="form-check-input" type="checkbox" id="Tue"><label class="form-check-label" for="Tue">Tue</label></div>
+                                <div><input class="form-check-input" type="checkbox" id="Wed"><label class="form-check-label" for="Wed">Wed</label></div>
+                                <div><input class="form-check-input" type="checkbox" id="Thu"><label class="form-check-label" for="Thu">Thu</label></div>
+                                <div><input class="form-check-input" type="checkbox" id="Fri"><label class="form-check-label" for="Fri">Fri</label></div>
+                                <div><input class="form-check-input" type="checkbox" id="Sat"><label class="form-check-label" for="Sat">Sat</label></div>
+                                <div><input class="form-check-input" type="checkbox" id="Sun"><label class="form-check-label" for="Sun">Sun</label></div>
+                            </div>
+                        </div>
+                    </form>
+                    <form id="panel-2" style="display: none;">
+                        <div class="mb-3">
+                            <label for="nscc_stop" class="form-label">Arriving Campus</label>
+                            <input type="text" class="form-control" id="nscc_stop" placeholder="Type the name of your campus:">
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="nscc_departure" class="form-label">Arrival Time</label>
+                            <input type="text" class="form-control" id="nscc_departure">
+                        </div>
+
+                        
+                    </form>
+                    <form id="panel-3" style="display: none;">
+                        <div class="mb-3">
+                            <label for="stop" class="form-label">Meet Me Location</label>
+                            <select class="form-select" id="stop">
+                                <option value="">Car Pool or Pick-Up Location</option>
+                                <option value="stop1">Meet me Stop 1 from API Server</option>
+                                <option value="stop2">Meet me Stop 2 from API Server</option>
+                                <option value="stop3">Meet me Stop 3 from API Server</option>
+                            </select>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="stop_arrive_time" class="form-label">Estimated Meet-Me Time</label>
+                            <input type="text" class="form-control" id="stop_arrive_time" value="Calculated From API"
+                                readonly>
+                        </div>
+                    </form>
+                    <form id="panel-4" style="display: none;">
+                        <div class="row mb-3">
+                            <div class="col-md-6">
+                                <label for="start_date" class="form-label">Journey Start Date</label>
+                                <input type="date" class="form-control" id="start_date">
+                            </div>
+                            <div class="col-md-6">
+                                <label for="end_date" class="form-label">Journey End Date</label>
+                                <input type="date" class="form-control" id="end_date">
+                            </div>
+                        </div>
+                    </form>
+                    <div class="text-center">
+                        <button id="next-button" onclick="nextPanel()" class="btn btn-custom">Next</button>
+                    </div>
+                </div>
+            </div>
+            <div id="right-container">
+                <div id="map"></div>
+            </div>
+        </div>
+    </main>
+
+    <div id="footer"></div>
+    <script src="../myjourney/scripts/script.js"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+    <script>
+        document.querySelectorAll('.navbar-nav .nav-link').forEach(function (navLink) {
+            navLink.addEventListener('click', function () {
+                const navbarCollapse = document.querySelector('.navbar-collapse');
+                if (navbarCollapse.classList.contains('show')) {
+                    new bootstrap.Collapse(navbarCollapse).toggle();
+                }
+            });
+        });
+        var map = L.map('map').setView([45.49951, -63.00394], 7);
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+        }).addTo(map);
+
+        function nextPanel() {
+            const panels = ['panel-1', 'panel-2', 'panel-3', 'panel-4'];
+            const button = document.getElementById('next-button');
+
+            for (let i = 0; i < panels.length - 1; i++) {
+                const currentPanel = document.getElementById(panels[i]);
+                const nextPanel = document.getElementById(panels[i + 1]);
+
+                if (currentPanel.style.display === 'block') {
+                    currentPanel.style.display = 'none';
+                    nextPanel.style.display = 'block';
+
+                    if (nextPanel.id === panels[panels.length - 1]) {
+                        button.textContent = 'Save';
+                    } else {
+                        button.textContent = 'Next';
+                    }
+                    break;
+                }
+            }
+        }
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,44 @@
+
+/* Styles for html and body */
+html, body {
+  margin: 0;
+  padding: 0;
+  font-family: var(--font-family), 'sans-serif';
+  font-size: clamp(var(--min-font-size), var(--scaling-factor) + var(--min-font-size), var(--max-font-size));
+  font-weight: 400;
+  color: var(--text-color);
+  background-color: var(--background-color);
+}
+
+.highlight {
+  font-size: 1.1rem;
+  font-weight: 800;
+  color: var(--primary-color);
+}
+
+/* General styles for the flex container */
+
+.basecontainer {
+  align-items: center;
+  width: 100%;
+}
+
+.headercontainer {
+  align-items: center;
+  width: 100%;
+}
+
+.maincontainer {
+  align-items: center;
+  width: 100%;
+}
+.footercontainer {
+  align-items: center;
+  width: 100%;
+}
+
+
+
+
+
+

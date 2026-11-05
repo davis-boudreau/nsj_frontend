@@ -1,0 +1,349 @@
+<!doctype html>
+<html lang="en" class="scroll-smooth">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Tailwind CSS Cheatsheet</title>
+
+    <!-- Pre-init theme to avoid FOUC -->
+    <script>
+      (function () {
+        try {
+          const stored = localStorage.getItem('theme'); // 'light' | 'dark' | null
+          const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+          const shouldDark = stored ? stored === 'dark' : prefersDark;
+          if (shouldDark) document.documentElement.classList.add('dark');
+        } catch(e) {}
+      })();
+    </script>
+
+    <!-- Tailwind CSS via CDN (Play) -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Optional: Tailwind config (extend colors, enable class-based dark mode) -->
+    <script>
+      tailwind.config = {
+        darkMode: 'class',
+        theme: {
+          extend: {
+            colors: {
+              brand: {
+                50:  '#eff6ff',
+                100: '#dbeafe',
+                200: '#bfdbfe',
+                300: '#93c5fd',
+                400: '#60a5fa',
+                500: '#3b82f6',
+                600: '#2563eb',
+                700: '#1d4ed8',
+                800: '#1e40af',
+                900: '#1e3a8a'
+              }
+            }
+          }
+        }
+      }
+    </script>
+
+    <!-- Page styles (optional tiny polish) -->
+    <style>
+      ::selection { background: #93c5fd; color: #0b1020; }
+      .code { font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace; }
+    </style>
+  </head>
+
+  <body class="bg-gray-50 text-gray-900 dark:bg-gray-900 dark:text-gray-100 antialiased">
+    <!-- Header -->
+    <header class="sticky top-0 z-40 backdrop-blur supports-[backdrop-filter]:bg-white/60 bg-white/90 dark:supports-[backdrop-filter]:bg-gray-900/50 dark:bg-gray-900/80 border-b border-gray-200/70 dark:border-gray-800">
+      <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 h-14 flex items-center justify-between">
+        <h1 class="text-base sm:text-lg font-semibold tracking-tight">Tailwind CSS Cheatsheet</h1>
+
+        <!-- Theme toggle -->
+        <button
+          id="theme-toggle"
+          type="button"
+          class="p-2 rounded-lg border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 hover:bg-gray-100 dark:hover:bg-gray-800/70 transition-all shadow-sm active:scale-95"
+          aria-label="Toggle Theme"
+          aria-pressed="false"
+        >
+          <!-- Sun (light) -->
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-black block dark:hidden" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <circle cx="12" cy="12" r="4" />
+            <path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/>
+          </svg>
+          <!-- Half Moon (dark) -->
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 hidden dark:block text-gray-300" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/>
+          </svg>
+        </button>
+      </div>
+    </header>
+
+    <!-- Main -->
+    <main class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-8 sm:py-10">
+      <p class="text-sm text-gray-600 dark:text-gray-400 mb-6">
+        Quick utility reference for everyday Tailwind usage. Copy classes as-is or explore patterns at the bottom for variants and arbitrary values.
+      </p>
+
+      <!-- Grid -->
+      <div class="grid gap-6 sm:gap-8 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+
+        <!-- Layout -->
+        <article class="rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 shadow-sm p-4">
+          <h2 class="font-semibold mb-3">Layout</h2>
+          <div class="space-y-2 text-sm leading-relaxed">
+            <div>
+              <p class="text-gray-700 dark:text-gray-200 font-medium">Display</p>
+              <pre class="code mt-1 p-2 bg-gray-100 dark:bg-gray-900 rounded text-xs overflow-x-auto"><code>block inline inline-block hidden
+flex inline-flex grid inline-grid</code></pre>
+            </div>
+            <div>
+              <p class="text-gray-700 dark:text-gray-200 font-medium">Position</p>
+              <pre class="code mt-1 p-2 bg-gray-100 dark:bg-gray-900 rounded text-xs overflow-x-auto"><code>static relative absolute fixed sticky inset-0
+top-0 right-0 bottom-0 left-0 z-10 z-50</code></pre>
+            </div>
+            <div>
+              <p class="text-gray-700 dark:text-gray-200 font-medium">Overflow</p>
+              <pre class="code mt-1 p-2 bg-gray-100 dark:bg-gray-900 rounded text-xs overflow-x-auto"><code>overflow-auto overflow-hidden overflow-visible overflow-scroll
+overflow-x-auto overflow-y-auto truncate text-ellipsis</code></pre>
+            </div>
+          </div>
+        </article>
+
+        <!-- Spacing -->
+        <article class="rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 shadow-sm p-4">
+          <h2 class="font-semibold mb-3">Spacing</h2>
+          <div class="space-y-2 text-sm leading-relaxed">
+            <div>
+              <p class="text-gray-700 dark:text-gray-200 font-medium">Padding</p>
+              <pre class="code mt-1 p-2 bg-gray-100 dark:bg-gray-900 rounded text-xs overflow-x-auto"><code>p-0 p-2 p-4 p-6 p-8 px-4 py-2
+pt-4 pr-4 pb-4 pl-4</code></pre>
+            </div>
+            <div>
+              <p class="text-gray-700 dark:text-gray-200 font-medium">Margin / Auto</p>
+              <pre class="code mt-1 p-2 bg-gray-100 dark:bg-gray-900 rounded text-xs overflow-x-auto"><code>m-0 m-2 m-4 mx-auto my-6
+mt-4 mr-4 mb-4 ml-4 space-x-2 space-y-2</code></pre>
+            </div>
+            <div>
+              <p class="text-gray-700 dark:text-gray-200 font-medium">Gap (Grid/Flex)</p>
+              <pre class="code mt-1 p-2 bg-gray-100 dark:bg-gray-900 rounded text-xs overflow-x-auto"><code>gap-0 gap-2 gap-4 gap-6 gap-x-4 gap-y-2</code></pre>
+            </div>
+          </div>
+        </article>
+
+        <!-- Flexbox -->
+        <article class="rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 shadow-sm p-4">
+          <h2 class="font-semibold mb-3">Flexbox</h2>
+          <div class="space-y-2 text-sm">
+            <pre class="code p-2 bg-gray-100 dark:bg-gray-900 rounded text-xs overflow-x-auto"><code>flex flex-1 flex-auto flex-none
+flex-row flex-row-reverse flex-col flex-col-reverse
+flex-wrap flex-nowrap
+items-start items-center items-end
+justify-start justify-center justify-between justify-around
+content-start content-center
+self-start self-center self-end
+order-1 order-2 order-last</code></pre>
+          </div>
+        </article>
+
+        <!-- Grid -->
+        <article class="rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 shadow-sm p-4">
+          <h2 class="font-semibold mb-3">Grid</h2>
+          <div class="space-y-2 text-sm">
+            <pre class="code p-2 bg-gray-100 dark:bg-gray-900 rounded text-xs overflow-x-auto"><code>grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3
+grid-rows-2 auto-rows-fr
+col-span-2 col-start-2 col-end-4
+gap-2 gap-x-4 gap-y-6
+place-items-center place-content-between</code></pre>
+          </div>
+        </article>
+
+        <!-- Sizing -->
+        <article class="rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 shadow-sm p-4">
+          <h2 class="font-semibold mb-3">Sizing</h2>
+          <div class="space-y-2 text-sm">
+            <pre class="code p-2 bg-gray-100 dark:bg-gray-900 rounded text-xs overflow-x-auto"><code>w-4 w-8 w-16 w-24 w-1/2 w-full w-screen
+min-w-0 min-w-full max-w-xs max-w-md max-w-7xl
+h-4 h-10 h-24 h-full h-screen
+aspect-square aspect-video</code></pre>
+          </div>
+        </article>
+
+        <!-- Typography -->
+        <article class="rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 shadow-sm p-4">
+          <h2 class="font-semibold mb-3">Typography</h2>
+          <div class="space-y-2 text-sm">
+            <pre class="code p-2 bg-gray-100 dark:bg-gray-900 rounded text-xs overflow-x-auto"><code>text-xs text-sm text-base text-lg text-xl text-2xl
+font-light font-normal font-medium font-semibold font-bold
+leading-none leading-tight leading-normal leading-relaxed
+tracking-tight tracking-normal tracking-wide
+text-left text-center text-right
+italic not-italic underline line-through no-underline</code></pre>
+          </div>
+        </article>
+
+        <!-- Colors -->
+        <article class="rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 shadow-sm p-4">
+          <h2 class="font-semibold mb-3">Colors</h2>
+          <div class="space-y-2 text-sm">
+            <pre class="code p-2 bg-gray-100 dark:bg-gray-900 rounded text-xs overflow-x-auto"><code>text-gray-900 text-white text-red-600 text-blue-600
+bg-white bg-gray-50 bg-gray-900 bg-blue-100
+border border-gray-200 border-red-500
+fill-current stroke-current</code></pre>
+            <p class="text-xs text-gray-500 dark:text-gray-400">Use opacity suffixes like <code>/50</code>, e.g. <code>text-black/70</code>, <code>bg-blue-500/20</code></p>
+          </div>
+        </article>
+
+        <!-- Borders & Radius -->
+        <article class="rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 shadow-sm p-4">
+          <h2 class="font-semibold mb-3">Borders &amp; Radius</h2>
+          <div class="space-y-2 text-sm">
+            <pre class="code p-2 bg-gray-100 dark:bg-gray-900 rounded text-xs overflow-x-auto"><code>border border-2 border-0 border-t border-x
+border-gray-200 border-blue-500
+rounded rounded-md rounded-lg rounded-xl rounded-full
+divide-x divide-y divide-gray-200</code></pre>
+          </div>
+        </article>
+
+        <!-- Effects -->
+        <article class="rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 shadow-sm p-4">
+          <h2 class="font-semibold mb-3">Effects</h2>
+          <div class="space-y-2 text-sm">
+            <pre class="code p-2 bg-gray-100 dark:bg-gray-900 rounded text-xs overflow-x-auto"><code>shadow shadow-sm shadow-md shadow-lg shadow-xl shadow-none
+opacity-0 opacity-50 opacity-100
+mix-blend-multiply bg-blend-overlay</code></pre>
+          </div>
+        </article>
+
+        <!-- Transforms & Transitions -->
+        <article class="rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 shadow-sm p-4">
+          <h2 class="font-semibold mb-3">Transforms &amp; Transitions</h2>
+          <div class="space-y-2 text-sm">
+            <pre class="code p-2 bg-gray-100 dark:bg-gray-900 rounded text-xs overflow-x-auto"><code>transform scale-95 scale-100 rotate-6 -rotate-3 translate-x-2
+transition transition-colors transition-all duration-200
+ease-linear ease-in ease-out ease-in-out
+animate-pulse animate-bounce</code></pre>
+          </div>
+        </article>
+
+        <!-- Interactivity -->
+        <article class="rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 shadow-sm p-4">
+          <h2 class="font-semibold mb-3">Interactivity</h2>
+          <div class="space-y-2 text-sm">
+            <pre class="code p-2 bg-gray-100 dark:bg-gray-900 rounded text-xs overflow-x-auto"><code>cursor-pointer select-none select-text
+pointer-events-none pointer-events-auto
+focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2</code></pre>
+          </div>
+        </article>
+
+        <!-- Lists & Tables -->
+        <article class="rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 shadow-sm p-4">
+          <h2 class="font-semibold mb-3">Lists &amp; Tables</h2>
+          <div class="space-y-2 text-sm">
+            <pre class="code p-2 bg-gray-100 dark:bg-gray-900 rounded text-xs overflow-x-auto"><code>list-disc list-decimal list-inside list-outside
+table table-auto table-fixed
+align-top align-middle align-bottom</code></pre>
+          </div>
+        </article>
+
+        <!-- Breakpoints -->
+        <article class="rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 shadow-sm p-4">
+          <h2 class="font-semibold mb-3">Breakpoints</h2>
+          <div class="space-y-2 text-sm">
+            <pre class="code p-2 bg-gray-100 dark:bg-gray-900 rounded text-xs overflow-x-auto"><code>sm: ≥640px  md: ≥768px  lg: ≥1024px  xl: ≥1280px  2xl: ≥1536px
+/* Usage */ sm:text-sm md:text-base lg:text-lg xl:text-xl</code></pre>
+          </div>
+        </article>
+
+        <!-- Dark Mode -->
+        <article class="rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 shadow-sm p-4">
+          <h2 class="font-semibold mb-3">Dark Mode</h2>
+          <div class="space-y-2 text-sm">
+            <pre class="code p-2 bg-gray-100 dark:bg-gray-900 rounded text-xs overflow-x-auto"><code>dark:bg-gray-900 dark:text-gray-100 dark:border-gray-700
+dark:hover:bg-gray-800 dark:focus:ring-blue-400</code></pre>
+            <p class="text-xs text-gray-500 dark:text-gray-400">
+              Config: <code>darkMode: 'class'</code>, then toggle <code>&lt;html class="dark"&gt;</code>.
+            </p>
+          </div>
+        </article>
+
+        <!-- Images & Media -->
+        <article class="rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 shadow-sm p-4">
+          <h2 class="font-semibold mb-3">Images &amp; Media</h2>
+          <div class="space-y-2 text-sm">
+            <pre class="code p-2 bg-gray-100 dark:bg-gray-900 rounded text-xs overflow-x-auto"><code>object-cover object-contain object-center
+rounded-lg ring-1 ring-black/5
+prose prose-sm sm:prose lg:prose-lg dark:prose-invert</code></pre>
+          </div>
+        </article>
+
+        <!-- Forms (Basics) -->
+        <article class="rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 shadow-sm p-4">
+          <h2 class="font-semibold mb-3">Forms (Basics)</h2>
+          <div class="space-y-2 text-sm">
+            <pre class="code p-2 bg-gray-100 dark:bg-gray-900 rounded text-xs overflow-x-auto"><code>appearance-none placeholder-gray-400
+ring-1 ring-gray-300 focus:ring-2 focus:ring-blue-500
+disabled:opacity-50 disabled:cursor-not-allowed</code></pre>
+          </div>
+        </article>
+
+        <!-- Visibility & Misc -->
+        <article class="rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 shadow-sm p-4">
+          <h2 class="font-semibold mb-3">Visibility &amp; Misc</h2>
+          <div class="space-y-2 text-sm">
+            <pre class="code p-2 bg-gray-100 dark:bg-gray-900 rounded text-xs overflow-x-auto"><code>visible invisible sr-only not-sr-only
+isolate z-0 z-10 z-50
+ring ring-1 ring-2 ring-offset-2 ring-blue-500</code></pre>
+          </div>
+        </article>
+
+        <!-- Variants & Patterns -->
+        <article class="rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 shadow-sm p-4">
+          <h2 class="font-semibold mb-3">Variants &amp; Patterns</h2>
+          <div class="space-y-2 text-sm">
+            <div>
+              <p class="text-gray-700 dark:text-gray-200 font-medium">States</p>
+              <pre class="code mt-1 p-2 bg-gray-100 dark:bg-gray-900 rounded text-xs overflow-x-auto"><code>hover:bg-blue-600 focus:ring-2 active:scale-95
+disabled:opacity-50 group-hover:opacity-100
+aria-pressed:true:bg-blue-600 data-[open=true]:rotate-180</code></pre>
+            </div>
+            <div>
+              <p class="text-gray-700 dark:text-gray-200 font-medium">Responsive + State</p>
+              <pre class="code mt-1 p-2 bg-gray-100 dark:bg-gray-900 rounded text-xs overflow-x-auto"><code>sm:hover:bg-gray-100 md:focus:ring-2 lg:active:opacity-80</code></pre>
+            </div>
+            <div>
+              <p class="text-gray-700 dark:text-gray-200 font-medium">Arbitrary values</p>
+              <pre class="code mt-1 p-2 bg-gray-100 dark:bg-gray-900 rounded text-xs overflow-x-auto"><code>mt-[3.5rem] w-[72ch] text-[15px] shadow-[0_1px_8px_rgba(0,0,0,0.08)]
+bg-[conic-gradient(at_top_right,_#0ea5e9,_#22d3ee)]</code></pre>
+            </div>
+          </div>
+        </article>
+
+      </div>
+
+      <!-- Footer note -->
+      <p class="mt-8 text-xs text-gray-500 dark:text-gray-400">
+        Tip: Combine <code>group</code>, <code>peer</code>, <code>aria-*</code>, and <code>data-*</code> attributes for powerful UI states.
+      </p>
+    </main>
+
+    <!-- Toggle script -->
+    <script>
+      (function () {
+        const btn = document.getElementById('theme-toggle');
+        function setPressed(isDark) {
+          if (btn) btn.setAttribute('aria-pressed', isDark ? 'true' : 'false');
+        }
+        setPressed(document.documentElement.classList.contains('dark'));
+
+        btn?.addEventListener('click', () => {
+          const root = document.documentElement;
+          const nowDark = !root.classList.contains('dark');
+          root.classList.toggle('dark', nowDark);
+          localStorage.setItem('theme', nowDark ? 'dark' : 'light');
+          setPressed(nowDark);
+        });
+      })();
+    </script>
+  </body>
+</html>

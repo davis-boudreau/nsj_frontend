@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Bootstrap Responsive Page</title>
+
+  <!-- Bootstrap 5 CSS CDN -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+
+  <!-- Custom CSS -->
+  <link rel="stylesheet" href="css/style.css">
+
+</head>
+<body>
+  <header role="banner">
+    <nav class="navbar navbar-expand-lg navbar-light bg-light" role="navigation" aria-label="Main navigation">
+      <div class="container-fluid">
+        <a class="navbar-brand" href="#">
+          <img src="images/logo.png" alt="NSCCJourney" style="width: 150px;">
+        </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+          data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false"
+          aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+          <ul class="navbar-nav ms-auto">
+            <li class="nav-item"><a class="nav-link active" aria-current="page" href="index.html">Home</a></li>
+            <li class="nav-item"><a class="nav-link" href="#">About Us</a></li>
+            <li class="nav-item"><a class="nav-link" href="#">Contact Us</a></li>
+            <li class="nav-item"><a class="nav-link" href="#">Sign Up</a></li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+  </header>
+
+  <main role="loginform" id="hero">
+    <div class="size text-center">
+        <img src="images/logo.png" class="logo">  
+
+        <form id="loginForm" novalidate>
+            <div class="mb-3 w-80 mx-auto text-start">
+                <input type="email" id="email" class="form-control" placeholder="Enter your email" required>
+                <div class="invalid-feedback">Please enter a valid email.</div>
+            </div>
+
+            <div class="mb-3 w-80 mx-auto text-start">
+                <input type="password" id="password" class="form-control" placeholder="Enter your password" required minlength="6">
+                <div class="invalid-feedback">Password must be at least 6 characters.</div>
+            </div>
+
+            <a href="forgot-password.html" class="d-block mb-3">Forgot Password?</a>
+
+            <button type="submit" class="btn btn-custom-sec w-50">Login</button>
+        </form>
+    </div> 
+  </main>
+
+  <div id="footer">hhjjh</div>
+  <script src="../myjourney/scripts/script.js"></script>
+  
+  <!-- Bootstrap JS Bundle -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+</body>
+</html>

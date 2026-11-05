@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Bus Stops Map</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+     integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
+     crossorigin=""/>
+    <style>
+        #mapid { height: 500px; }
+
+        #mapid .leaflet-tile-pane {
+        filter: brightness(100%)  /* Keep original brightness */
+          contrast(110%)     /* Slightly increase contrast for definition */
+          hue-rotate(210deg)   /* Shift towards a cleaner blue for the sea */
+          saturate(220%)      /* Increase saturation for richer colors */
+          sepia(50%)         /* Apply a moderate sepia for land tone */
+          hue-rotate(-190deg);  /* Adjust hue to balance blue/green */
+}
+
+.leaflet-tile-pane path {
+  stroke: #000000;
+  stroke-width: 1px;
+  fill: none;
+}
+    </style>
+</head>
+<body>
+    <div id="mapid"></div>
+
+    <!-- Make sure you put this AFTER Leaflet's CSS -->
+ <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+ integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
+ crossorigin=""></script>
+    
+ <script>
+    document.addEventListener('DOMContentLoaded', () => {
+        var map = L.map('mapid').setView([44.53586, -63.20524], 7); // Initial view of Halifax, NS
+
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+        }).addTo(map);
+
+        // Define custom icons
+        var schoolIcon = L.icon({
+            iconUrl: '../assets/icons/school-icon.png',
+            iconSize: [25, 25],
+            iconAnchor: [12, 25],
+            popupAnchor: [1, -34],
+            shadowSize: [25, 25],
+        });
+
+        var meetingPointIcon = L.icon({
+            iconUrl: '../assets/icons/meeting-point-icon.png',
+            iconSize: [25, 25],
+            iconAnchor: [12, 25],
+            popupAnchor: [1, -34],
+            shadowSize: [25, 25]
+        });
+
+        var parkingIcon = L.icon({
+            iconUrl: '../assets/icons/parking-icon.png',
+            iconSize: [25, 25],
+            iconAnchor: [12, 25],
+            popupAnchor: [1, -34],
+            shadowSize: [25, 25]
+        });
+
+        var hospitalIcon = L.icon({
+            iconUrl: '../assets/icons/hospital-icon.png',
+            iconSize: [25, 25],
+            iconAnchor: [12, 25],
+            popupAnchor: [1, -34],
+            shadowSize: [25, 25]
+        });
+
+        // Function to fetch data and add markers to the map
+        function fetchData(url) {
+            fetch(url)
+                .then(response => response.json())
+                .then(data => {
+                    data.results.forEach(stop => {
+                        var icon;
+                        // Reserved stop_id range 0001-0999
+                        if (stop.stop_id >= 1000 && stop.stop_id < 2000) {
+                            icon = schoolIcon;
+                        } else if (stop.stop_id >= 2000 && stop.stop_id < 3000) {
+                            icon = meetingPointIcon;
+                        } else if (stop.stop_id >= 3000 && stop.stop_id < 4000) {
+                            icon = parkingIcon;
+                        } else if (stop.stop_id >= 4000 && stop.stop_id < 5000) {
+                            icon = hospitalIcon;
+                        }
+
+                        var marker = L.marker([stop.stop_lat, stop.stop_lon], { icon: icon }).addTo(map);
+                        var popupContent = `<b>${stop.stop_name}</b><br>`;
+                        if (stop.stop_desc && stop.stop_desc !== 'default_desc') {
+                            popupContent += `${stop.stop_desc}<br>`;
+                        }
+                        if (stop.stop_url) {
+                            popupContent += `<a href="${stop.stop_url}" target="_blank">More Info</a>`;
+                        }
+                        marker.bindPopup(popupContent);
+                    });
+
+                    // If there's a next page, fetch it
+                    if (data.next) {
+                        fetchData(data.next);
+                    }
+                })
+                .catch(error => {
+                    console.error('Error fetching data:', error);
+                });
+        }
+
+        // Initial fetch call
+        fetchData('http://localhost:8000/api/v1/stn/GetDest');
+    });
+</script>
+</body>
+</html>

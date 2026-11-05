@@ -1,0 +1,39 @@
+<nav class="container mx-auto px-6 pt-[env(safe-area-inset-top)] pb-4">
+  <div class="flex items-center justify-between py-4">
+    <div id="siteLogo">
+      <a href="/" class="flex items-center gap-2">
+        <img src="images/nsjourney-light.svg" alt="Logo" class="logo-light h-16 md:h-20 w-auto">
+        <img src="images/nsjourney-dark.svg" alt="Logo" class="logo-dark h-16 md:h-20 w-auto hidden">
+      </a>
+    </div>
+
+    <div class="flex items-center gap-4"> 
+      <ul class="hidden md:flex items-center gap-8 text-sm font-bold tracking-widest text-ui-muted mr-4">
+        <li><a class="nav-link" href="/">Home</a></li>
+        <li><a class="nav-link" href="/myjourney">My Journey</a></li>
+        <li><a class="nav-link" href="/learnmore">Learn More</a></li>
+        <li><a class="nav-link" href="/join">Join</a></li>
+        <li><a class="nav-link" href="/login">Login</a></li>
+      </ul>
+
+      <div class="flex items-center gap-2">
+        <button onclick="toggleTheme()" class="p-2.5 rounded-xl border border-ui-border bg-ui-surface hover:bg-brand-100 transition-all active:scale-90" aria-label="Toggle Theme">
+          <svg xmlns="http://www.w3.org/2000/svg" class="theme-icon-sun h-6 w-6 text-black" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364-6.364l-.707.707M6.343 17.657l-.707.707m12.728 0l-.707-.707M6.343 6.343l-.707-.707M12 8a4 4 0 100 8 4 4 0 000-8z" /></svg>
+          <svg xmlns="http://www.w3.org/2000/svg" class="theme-icon-moon h-6 w-6 text-neutral-400 hidden" fill="currentColor" viewBox="0 0 24 24"><path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z" /></svg>
+        </button>
+
+        <button id="mobile-menu-btn" class="md:hidden p-2.5 rounded-xl border border-ui-border bg-ui-surface hover:bg-brand-100 transition-all active:scale-90" aria-label="Open Menu">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-main" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" /></svg>
+        </button>
+      </div>
+    </div>
+  </div>
+  
+  <div id="mobile-drawer" class="hidden md:hidden flex flex-col gap-4 pt-6 pb-4 border-t border-ui-border mt-2 animate-fade-in text-ui-text font-bold">
+    <a href="/" class="nav-link">Home</a>
+    <a href="#myjourney" class="nav-link">My Journey</a>
+    <a href="#learnmore" class="nav-link">Learn More</a>
+    <a href="#join" class="nav-link">Join</a>
+    <a href="/login" class="nav-link">Login</a>
+  </div>
+</nav>

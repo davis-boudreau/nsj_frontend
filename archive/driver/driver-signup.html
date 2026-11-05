@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NSCC Journey | Driver Sign Up</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../css/styles.css">
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-white w-100 align-items-center">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="index.html">
+                <img src="../images/logo.png" alt="NSCCJourney" style="width: 150px;">
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#collapsibleNavbar">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="collapsibleNavbar">
+                <ul class="navbar-nav ms-auto w-100 d-flex justify-content-end p-2">
+                    <li class="nav-item mr-3">
+                        <a class="nav-link" href="../index.html">Home</a>
+                    </li>
+                    <li class="nav-item mr-3">
+                        <a class="nav-link" href="#">About us</a>
+                    </li>
+                    <li class="nav-item mr-3">
+                        <a class="nav-link" href="#contact">Contact us</a>
+                    </li>
+                    <li class="nav-item mr-3">
+                      <a class="nav-link" href="../rider-signup.html">Sign Up</a>
+                    </li>
+                 </ul>
+            </div>
+          </div>
+      </nav>
+
+      <section id="hero">    
+        <div class="size">
+            <img src="../images/logo.png" alt="NSCCJourney" class="logo">            
+            <form id="signupForm" novalidate class="text-start">
+                <div class="mb-3">
+                    <label class="form-label">Sign up as</label>
+                    <select class="form-select" required id="roleSelect2">
+                        <option value="">Select Role</option>
+                        <option value="Driver" selected>Driver</option>
+                        <option value="Rider">Rider</option>
+                    </select>
+                    <div class="invalid-feedback">Please select a role.</div>
+                </div>
+            
+                <div class="mb-3">
+                    <input type="text" class="form-control" placeholder="First Name" required>
+                    <div class="invalid-feedback">First Name is required.</div>
+                </div>
+                <div class="mb-3">
+                    <input type="text" class="form-control" placeholder="Last Name" required>
+                    <div class="invalid-feedback">Last Name is required.</div>
+                </div>
+                <div class="mb-3">
+                    <input type="email" class="form-control" placeholder="Email" required>
+                    <div class="invalid-feedback">Enter a valid email.</div>
+                </div>
+                <div class="mb-3">
+                    <input type="tel" class="form-control" placeholder="Phone Number" pattern="[0-9]{10}" required>
+                    <div class="invalid-feedback">Enter a 10-digit phone number.</div>
+                </div>
+            
+                <!-- Vehicle Information Section -->
+                <h5 class="mt-4">Vehicle Information</h5>
+            
+                <div class="mb-3">
+                    <label class="form-label">Make</label>
+                    <select class="form-select" required>
+                        <option value="">Select Maker</option>
+                        <option>Toyota</option>
+                        <option>Honda</option>
+                        <option>Ford</option>
+                        <option>Nissan</option>
+                        <option>Chevrolet</option>
+                        <option>Hyundai</option>
+                        <option>Other</option>
+                    </select>
+                    <div class="invalid-feedback">Please select a vehicle make.</div>
+                </div>
+            
+                <div class="mb-3">
+                    <input type="text" class="form-control" placeholder="Model" required>
+                    <div class="invalid-feedback">Model is required.</div>
+                </div>
+            
+                <div class="mb-3">
+                    <label class="form-label">Year</label>
+                    <select class="form-select" required id="yearSelect">
+                        <option value="">Select Year</option>
+                    </select>
+                    <div class="invalid-feedback">Please select a valid year.</div>
+                </div>
+                        
+                <!-- Password Section -->
+                <div class="mb-3">
+                    <input type="password" id="password" class="form-control" placeholder="Password" required minlength="6">
+                    <div class="invalid-feedback">Password must be at least 6 characters.</div>
+                </div>
+                <div class="mb-3">
+                    <input type="password" id="confirmPassword" class="form-control" placeholder="Confirm Password" required>
+                    <div class="invalid-feedback">Passwords must match.</div>
+                </div>
+            
+                <button type="submit" class="btn btn-custom w-100">Sign Up</button>
+            </form>
+        </div>    
+    </section>
+    
+
+
+     <!-- Footer Section -->
+  <footer class="footer" id="contact">
+    <div class="container-fluid row">
+      <div class="col-lg-6 footer-item copyright d-flex flex-wrap justify-content-between">
+        <div>
+          <div class="container-fluid"><a> Copyright © 2025 NSCC JOURNEY. All rights reserved.</a></div>
+          <div class="container-fluid" id="section2">
+            <a href="#" class="privacy_policy">Privacy Policy</a> |
+            <a href="#" class="use_of_cookies">Use of Cookies</a> |
+            <a href="#" class="terms_of_use">Terms of Use</a>
+          </div>
+        </div>
+      </div>
+      
+      <div class="col-lg-6 footer_socials_contact d-flex flex-wrap justify-content-between pt-2">
+        <div class="col-lg-6 footer-item social-media">
+            <a href="#" class="instagram"><img src="../images/instagram.png" alt="Instagram"></a>
+            <a href="#" class="youtube"><img src="../images/youtube.png" alt="YouTube"></a>
+            <a href="#" class="linkedin"><img src="../images/linkedin.png" alt="LinkedIn"></a>
+        </div>
+        <div class="col-lg-6 footer-item contact-info" id="email_phone">
+          <h4>Contact Us</h4>
+          <p>Email: <a href="mailto:contact-nsccride@nroute.com">contact@nsccjourney.com</a></p>
+          <p>Phone: 902-502-5555</p>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Get the dropdown element by its id
+        const roleSelect2 = document.getElementById('roleSelect2');
+
+        // Add an event listener to detect when the selection changes
+        roleSelect2.addEventListener('change', function() {
+            // Check if the selected value is "Rider"
+            if (roleSelect2.value === "Rider") {
+                // Redirect to the rider-signup.html page
+                window.location.href = '../rider-signup.html';  // Use the correct path
+            }
+        });
+    </script>
+    <script src="js/script.js"></script>
+</body>
+</html>

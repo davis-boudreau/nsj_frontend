@@ -1,0 +1,464 @@
+html {
+    font-family: "Poppins", sans-serif;
+    overflow-x: hidden;  /* Prevent horizontal overflow */
+    width: 100%;          /* Ensure full width */
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    font-size: 16px; /* Base font size */
+ }
+ 
+ body {
+     font-size: 4vw; /* 2% of the viewport */
+ }
+ .navbar {
+     height: 80px;
+     display: flex;
+     align-items: center; /* Vertically center the content */
+     justify-content: space-between; /* Space out the items */
+     margin-left: auto;
+     margin-right: auto;
+     position: relative;
+     z-index: 3; /* Higher than the overlay */
+ }
+
+
+.hero-title-1 {
+    font-family: "Poppins", sans-serif;
+    font-weight: 600;
+    font-size: 3.5rem;
+    margin-bottom: 0;
+    text-align: center;
+    line-height: 1;
+    color: #fff;
+ }
+
+ .hero-title-2 {
+   font-family: "Poppins", sans-serif;
+   font-weight: 600;
+   font-size: 3.2rem;
+   margin-bottom: 0;
+   text-align: center;
+   line-height: 1;
+   color: #fff;
+}
+
+ #hero {
+    background-image: url("../images/travel.jpg");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    transition: margin-top 0.3s ease;
+    padding: 25px;
+    box-sizing: border-box;
+    position: relative; /* Ensures overlay positioning */
+ }
+  
+ .hero-subtitle {
+    font-family: "Poppins", sans-serif;
+    text-align: center; /* Center subtitle text */
+    max-width: 500px;
+    line-height: 1.26;
+    color: white;
+    margin: 10px auto 30px; /* Centers the subtitle with margin */
+ }
+
+ .route_list_btn {
+    border-radius: 30px;
+    border: none;
+    padding: 15px 50px;
+    display: inline-block;
+    margin-top: 20px;
+    font-size: 1.3rem;
+    width: auto;
+    color: white;
+    background-color: #1B4159;
+    font-weight: 100px;
+    text-decoration: none;
+ }
+
+ .route_list_btn2 {
+   border-radius: 30px;
+   border: none;
+   padding: 15px 50px;
+   display: inline-block;
+   margin-top: 20px;
+   font-size: 1.3rem;
+   width: auto;
+   color: white;
+   background-color: #0F427A;
+   font-weight: 100px;
+   text-decoration: none;
+}
+
+.button-container {
+    display: flex;
+    gap: 10px; /* Adjust spacing between buttons */
+ }
+/* Custom primary button */
+.btn-custom, .btn-custom-sec, .btn-custom-danger, .btn-custom-outline {
+   background-color: #0F427A; /* Default color for primary button */
+   color: white; /* Text color */
+   border: none;
+   padding: 10px 20px;
+   font-size: 16px;
+   border-radius: 20px;
+   width: 200px; /* Consistent width for all buttons */
+   transition: background-color 0.3s ease-in-out;
+   text-align: center; /* Ensure text is centered */
+   margin-top: 20px;
+}
+
+.btn-custom {
+   background-color: #0F427A; /* Hover color for primary button */
+   color: white;
+}
+
+/* Hover effect */
+.btn-custom:hover {
+   background-color: #333; /* Hover color for primary button */
+   color: white;
+}
+
+.btn-custom-outline {
+   background-color: white; 
+   color: #0F427A;
+   border: 2px solid #0F427A; /* Outline color */
+}
+
+.btn-custom-outline:hover {
+   background-color: #0F427A; 
+   color: white;
+}
+
+
+
+.btn-custom-sec {
+   background-color: #0F427A; /* Color for secondary button */
+   margin-top: 20px;
+}
+
+.btn-custom-sec:hover {
+   background-color: #0d2a3b; /* Hover color for secondary button */
+   color: white;
+}
+
+.btn-custom-danger {
+   background-color: #920202; /* Color for danger button */
+}
+
+.btn-custom-danger:hover {
+   background-color: #ce4949; /* Hover color for danger button */
+   color: white;
+}
+ 
+ .route_list_btn:hover {
+    background-color: #333;  /* Optional: Change background color on hover */
+ }
+ 
+ .route_list_btn2:hover {
+    background-color: #fff;  /* Optional: Change background color on hover */
+    color: #0F427A;
+ } 
+ 
+  /* Footer Section */
+.footer {
+    background-color: #333;
+    color: white;
+    padding: 40px 0;
+    width: 100%;
+    align-items: center;
+    justify-content: center;
+    box-sizing: border-box;
+    /* Remove any positioning that might conflict */
+    position: relative;
+    z-index: 9999;
+ }
+
+ 
+.main-content {
+    flex: 1;                 /* This makes the main content take up the remaining space */
+ }
+ 
+ .footer-item {
+    margin-bottom: 0px;
+    flex: 1;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+ }
+ /* Legal Information (first 6 columns) */
+.footer-item .copyright a,
+.privacy_policy,
+.terms_of_use,
+.use_of_cookies,
+.footer-item .legal-links ul li a,
+.footer-item.contact-info a,
+.footer-item.social-media ul li a {
+    text-decoration: none;
+    color: white;
+}
+
+.footer-item .copyright a:hover,
+.privacy_policy:hover,
+.terms_of_use:hover,
+.use_of_cookies:hover,
+.footer-item .legal-links ul li a:hover,
+.footer-item.contact-info a:hover,
+.footer-item.social-media ul li a:hover {
+    color: #00bcd4;
+}
+
+/* Legal Links */
+.footer-item .legal-links ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.footer-item .legal-links ul li {
+    margin-bottom: 5px;
+}
+
+/* Contact Info (next 3 columns) */
+.footer-item.contact-info h4 {
+    margin-bottom: 10px;
+}
+
+.footer-item.contact-info p {
+    margin: 0;
+    font-size: 1rem;
+}
+
+/* Social Media (last 3 columns) */
+.footer-item.social-media ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.footer-item.social-media ul li {
+    margin-bottom: 10px;
+}
+
+.footer-item.social-media ul li a {
+    font-size: 1.25rem;
+}
+
+ .footer-item.social-media {
+    display: flex;
+    justify-content: right;  /* Centers items horizontally */
+    align-items: center;      /* Centers items vertically */
+    height: 100%;             /* Ensures it takes full height of its container */
+ }
+ 
+ .footer-item.social-media a {
+    margin: 0 5px;           /* Adds spacing between the icons */
+ }
+ 
+ 
+ /* CSS for adding a border between the Contact Us and Follow Us sections */
+ .footer-item {
+    position: relative; /* Ensures any positioning works inside */
+  }
+  
+  .footer-item.contact-info {
+    border-left: 2px solid #fff; /* Adds a vertical line between Follow Us and Contact Us */
+    padding-left: 25px; /* Adds some space after the border */
+  }
+  
+  .footer-item.social-media {
+    padding-right: 25px; /* Adds some space on the right of the Follow Us section */
+    text-align: right; /* Aligns "Follow Us" text to the right */
+  }
+ 
+  .footer-item.copyright {
+    padding-left: 50px;
+  }
+ 
+ /* Custom style to place the label to the left of the input field */
+ .form-group {
+    display: flex;  /* Use flexbox to arrange label and input side by side */
+    align-items: center; /* Vertically align the label and input */
+    gap: 10px; /* Space between the label and input */
+ }
+ 
+ .form-label {
+    flex: 0 0 150px; /* Set the label width to a fixed size */
+    text-align: right; /* Align the label text to the right */
+    display: block;
+    text-align: left;
+    margin-bottom: 0.5rem;
+ }
+ 
+ .input-group input {
+    flex: 1; /* Make the input field take up the remaining space */
+ }
+ 
+ .input-group {
+    width: 100%;
+ }
+
+ .size{
+    background: white;
+    padding: 2rem;
+    border-radius: 10px;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 400px;
+    text-align: center;
+}
+
+/* Ensure the collapsed navbar covers full width on small screens */
+@media (max-width: 991px) {
+   .navbar-collapse {
+       background-color: white; 
+       position: absolute;
+       top: 100%;
+       left: 0;
+       width: 100%;
+       z-index: 1000;
+       box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Optional: adds shadow for better visibility */
+   }
+}
+
+#hero {
+   position: relative;
+   text-align: center;
+   padding: 100px 0;
+}
+
+/*#hero-content {
+   position: relative;
+   z-index: 2;  Keeps text above background 
+}*/
+
+/* Adjust the text position on smaller screens */
+@media (max-width: 768px) {
+   #hero {
+       padding-top: 200px; /* Adjust to move text down */
+   }
+
+   #hero-content {
+       margin-top: 50px; /* Moves text further down */
+   }
+}
+
+.more-info {
+   width: 100%; /* Increased width */
+   margin: 0 auto;
+   text-align: left; /* Ensures text is left-aligned */
+}
+.info-row {
+   padding: 5px 20px;
+   border-bottom: 1px solid #ddd;
+   display: flex;
+   justify-content: space-between;
+}
+.info-rows {
+   padding: 5px 20px;
+   border-bottom: 1px solid #ddd;
+   display: flex;
+   justify-content: space-between;
+}
+.bg-light {
+   background-color: #f8f9fa;
+}
+.info-row span {
+   font-weight: bold;
+}
+.info-rows span {
+   font-weight: bold;
+}
+
+/* Make sure the hero section takes full height of the screen */
+#hero {
+   min-height: 100vh; /* Ensures hero section takes up the full viewport height */
+   position: relative; /* This makes it the positioning context for the overlay */
+}
+
+/* Overlay Styling */
+.overlay {
+   position: absolute;
+   top: 0;
+   left: 0;
+   width: 100%;
+   height: 100%;
+   background: rgba(0, 0, 0, 0.6); /* Semi-transparent background */
+   display: flex;
+   justify-content: center;
+   align-items: center;
+   text-align: center;
+   color: white;
+   font-size: 1.2rem;
+   z-index: 999; /* Ensure it appears above other content */
+}
+
+/* Overlay Content Box */
+.overlay-content {
+   background: white;
+   color: black;
+   padding: 20px;
+   border-radius: 10px;
+   width: 300px;
+   box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.3);
+}
+
+/* Optional: Center the buttons inside the overlay */
+.d-grid {
+   display: grid;
+   gap: 10px;
+   place-items: center;
+}
+
+.profile {
+   border: none;
+   width: 140px; 
+   border-radius: 10%; 
+   margin-bottom: 15px;
+   background-color: #fff;
+}
+
+.logo {
+   width: 150px; 
+   margin-bottom: 20px;
+}
+
+.hr {
+   width: 80%; 
+   margin: 20px auto; 
+   border-top: 2px solid #ccc;
+}
+
+.info-row {
+   position: relative;
+   padding: 5px 10px;
+}
+
+.info-row a {
+   text-decoration: none;
+   color: inherit;
+   display: block;
+   width: 100%;
+   height: 100%;
+}
+
+/* Ensure all rows, including .bg-light, get the same hover effect */
+.info-row:hover,
+.info-row.bg-light:hover {
+   background-color: #0F427A !important; /* Ensure hover works on bg-light */
+   color: white;
+}
+
+.info-row:hover a,
+.info-row.bg-light:hover a {
+   color: white;
+}
+

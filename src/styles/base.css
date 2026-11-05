@@ -1,0 +1,444 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+html {
+  scroll-behavior: smooth;
+  /* 1. Sets the base for accessibility. 
+     Using % allows browser zoom/user settings to work correctly. */
+  font-size: 100%; 
+}
+
+@layer base {
+  :root {
+    /* Brand & Neutral Ramps (unchanged) */
+    --brand-100: #e6f0f9;
+    --brand-300: #7fb1e3;
+    --brand-500: #2B71B9;
+    --brand-700: #004780;
+    --brand-900: #002d52;
+    --highlight-500: #b47b00;
+    --highlight-600: #ca8a04;
+    --neutral-0: #ffffff;
+    --neutral-50: #f8fafc;
+    --neutral-100: #f1f5f9;
+    --neutral-200: #e2e8f0;
+    --neutral-400: #404e60;
+    --neutral-600: #475569;
+    --neutral-800: #1e293b;
+    --neutral-950: #020617;
+
+    /* Semantic Mappings */
+    --bg-main: var(--neutral-0);
+    --bg-surface: #ffffff;
+    --text-main: var(--neutral-800);
+    --text-muted: var(--neutral-600);
+    --border-main: var(--neutral-400);
+    --primary: var(--brand-700);
+    --bg-footer: var(--brand-700);
+    --accent: var(--highlight-500);
+    --hero-image: url('/images/heroimage-01-light.png');
+  }
+
+  [data-theme='dark'] {
+    --bg-main: var(--neutral-950);
+    --bg-surface: var(--neutral-800);
+    --text-main: var(--neutral-100);
+    --text-muted: var(--neutral-200);
+    --border-main: var(--neutral-600);
+    --primary: var(--brand-500);
+    --accent: var(--highlight-500);
+    --hero-image: url('/images/heroimage-01-dark.png');
+  }
+
+  /* 2. Typography Design System */
+  body {
+    background-color: var(--bg-main);
+    color: var(--text-main);
+    /* Set global base size: 1.125rem is 18px, great for accessibility */
+    font-size: 1.125rem; 
+    line-height: 1.6;
+    @apply antialiased transition-colors duration-300;
+  }
+
+  h1 { 
+    /* Fluid: Min 40px, Max 64px */
+    font-size: clamp(2.5rem, 5vw + 1rem, 4rem); 
+    @apply font-bold mb-6 leading-[1.1] tracking-tight; 
+    color: var(--primary);
+  }
+
+  h2 { 
+    /* Fluid: Min 32px, Max 48px */
+    font-size: clamp(2rem, 4vw + 1rem, 3rem);
+    @apply font-semibold mb-4 tracking-tight;
+    color: var(--text-main); 
+  }
+
+  h3 { 
+    /* Fluid: Min 24px, Max 32px */
+    font-size: clamp(1.5rem, 2vw + 1rem, 2rem);
+    @apply font-bold mb-3 tracking-tight; 
+    color: var(--text-muted); 
+  }
+
+  /* 3. Global Paragraph and Link control */
+  @layer base {
+    p {
+      @apply mb-6;
+      color: var(--text-muted);
+      font-size: 1.125rem; /* Explicitly set the base for the design system */
+      line-height: 1.75;   /* Slightly more breathing room for accessibility */
+    }
+  }
+
+  .text-highlight {
+    color: var(--accent);
+    @apply font-semibold underline decoration-yellow-500/30 underline-offset-4;
+  }
+
+  a { 
+    /* Remove default underlines so they don't clash with our custom active state */
+    @apply transition-all cursor-pointer inline-flex items-center gap-1 no-underline; 
+    color: var(--brand-500);
+    font-size: 1.125rem;
+    line-height: 1.75;
+  }
+
+  /* base.css */
+  #loading-bar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 4px; /* Slightly thicker for visibility */
+    background: linear-gradient(to right, #7fb1e3, #2B71B9); /* Using hex colors to be safe */
+    z-index: 10000; /* Ensure it's above the header */
+    width: 0%;
+    opacity: 0;
+    transition: width 0.4s ease-out, opacity 0.3s ease-in-out;
+    pointer-events: none;
+  }
+
+  #loading-bar.active {
+    opacity: 1;
+  }
+
+   footer {
+    background-color: var(--brand-950);
+    color: white;
+  }
+
+  [data-theme='dark'] footer {
+    background-color: var(--neutral-950);
+    border-top: 1px solid var(--neutral-800);
+  }
+
+  footer h1, footer h2, footer h3, footer p { color: white !important; }
+  footer a {
+    color: var(--brand-100) !important;
+    @apply hover:text-white transition-colors;
+  }
+  footer .text-ui-muted { color: var(--brand-300) !important; }
+
+  #main-content {
+    /* Subtract header height (approx 80px) and footer height if needed */
+    /* This keeps the footer at the bottom during the 'flash' */
+    min-height: calc(100vh - 160px); 
+    display: flex;
+    flex-direction: column;
+  }
+
+  /* Ensure the spinner container takes up the full space while loading */
+  #main-content > .flex {
+    flex-grow: 1;
+    min-height: 60vh;
+  }
+}
+
+@layer components {
+  
+  /* Mobile Drawer Styling */
+  #mobile-drawer {
+    @apply border-t border-ui-border mt-4 transition-all duration-300 ease-in-out;
+  }
+
+  /* Make the links in the drawer feel like buttons for mobile thumbs */
+  #mobile-drawer a {
+    @apply px-4 py-3 rounded-lg hover:bg-brand-100 dark:hover:bg-neutral-800 transition-colors w-full text-base;
+    color: var(--text-main);
+  }
+
+  /* Optional: Active link state for the drawer */
+  #mobile-drawer a.active {
+    color: var(--brand-500);
+    background-color: var(--brand-100);
+  }
+
+  .nav-link {
+    /* Explicitly use text-main to avoid "white-out" on redirect */
+    color: var(--text-main) !important; 
+    @apply font-extrabold text-lg transition-all duration-200 relative no-underline px-2 py-1;
+    letter-spacing: -0.01em;
+  }
+
+  /* State: Hover */
+  .nav-link:hover {
+    color: var(--brand-500) !important;
+    @apply -translate-y-0.5;
+  }
+
+  /* State: Active (When the page matches the link) */
+  .nav-link.nav-link-active {
+    color: var(--primary) !important; /* This is your brand-700/500 */
+  }
+
+  /* Custom Active Underline (The only underline we want) */
+  .nav-link.nav-link-active::after {
+    content: '';
+    position: absolute;
+    bottom: -2px;
+    left: 8px;   /* Adjusted for padding */
+    right: 8px;
+    height: 3px;
+    @apply rounded-full;
+    background-color: var(--primary);
+  }
+
+  .btn-primary {
+    background-color: var(--primary);
+    @apply px-8 py-4 text-white rounded-2xl font-bold transition-all 
+           active:scale-95 shadow-lg hover:brightness-110 flex items-center justify-center;
+  }
+
+  .btn-secondary {
+    @apply px-8 py-4 rounded-2xl font-bold border-2 transition-all active:scale-95 flex items-center justify-center;
+    border-color: var(--primary);
+    color: var(--primary);
+  }
+  
+  .btn-secondary:hover {
+    background-color: var(--brand-100);
+  }
+  
+  [data-theme='dark'] .btn-secondary:hover {
+    background-color: var(--neutral-700);
+  }
+
+  .card {
+    background-color: var(--bg-surface);
+    border: 1px solid var(--border-main);
+    @apply rounded-xl p-6 shadow-sm transition-all hover:shadow-md hover:-translate-y-1;
+  }
+
+   /* Logo & Icon Logic */
+  .logo-dark, .theme-icon-moon { display: none !important; }
+  .logo-light, .theme-icon-sun { display: block !important; }
+  
+  [data-theme='dark'] .logo-dark, [data-theme='dark'] .theme-icon-moon { display: block !important; }
+  [data-theme='dark'] .logo-light, [data-theme='dark'] .theme-icon-sun { display: none !important; }
+
+  /* Image Effects */
+  .theme-sensitive-img {
+    filter: brightness(1) contrast(1);
+    @apply transition-all duration-700 ease-in-out;
+  }
+  
+  [data-theme='dark'] .theme-sensitive-img {
+    filter: brightness(0.8) contrast(1.1);
+  }
+
+  /* This class will now handle the image swap automatically */
+  .hero-themed-image {
+    background-image: var(--hero-image);
+    background-size: cover;
+    background-position: center;
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    @apply transition-all duration-700 ease-in-out;
+  }
+  
+  .section-divider-faded {
+    @apply w-full block; /* Ensure it takes up space */
+    height: 1.5px; /* 3px can sometimes look like a 'box' rather than a 'line' */
+    background: linear-gradient(
+      to right, 
+      transparent, 
+      var(--border-main) 15%, 
+      var(--border-main) 85%, 
+      transparent
+    );
+    /* Remove opacity-50 if it's too faint, or keep it for a subtle look */
+    @apply transition-all duration-300; 
+  }
+
+  /* base.css */
+  /* Discovery Section: Theme-aware background for the Map area */
+  .section-discovery {
+    background: transparent; /* Let the body's background-color do the work */
+    transition: none; 
+    /* This removes the 'seam' between Hero and Discovery */
+    margin-top: 0;
+    padding-top: 4rem; 
+  }
+
+  /* 2. Optimized Map Container */
+  #ns-journey-map {
+    height: 600px;
+    width: 100%;
+    border-radius: 1.5rem;
+    /* Use transparent or var(--bg-main) so it never flashes a different color */
+    background-color: var(--bg-main); 
+    /* Match the body's transition speed exactly (300ms from your body tag) */
+    transition: filter 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+    overflow: hidden;
+    position: relative;
+    z-index: 1;
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+    margin-bottom: 2rem; /* Adds a bit of breathing room before the footer divider */
+  }
+
+  /* 3. The Map Filters (Refined for your 90% Invert style) */
+  html[data-theme='light'] #ns-journey-map {
+    filter: invert(90%) sepia(16%) hue-rotate(185deg) brightness(1.75) contrast(1.25) saturate(2) !important;
+  }
+
+  html[data-theme='dark'] #ns-journey-map {
+    filter: invert(90%) sepia(16%) hue-rotate(188deg) brightness(1.25) contrast(1.25) saturate(1.5) !important;
+  }
+
+  /* 4. Fix for the 'Line' between sections */
+  /* Sometimes Tailwind or browser defaults add a tiny border or gap */
+  .section-discovery, .hero-section {
+    border: none !important;
+    outline: none !important;
+  }
+
+  /* --- UI PROTECTION --- */
+  /* Targeting specifically to ensure pins don't look 'broken' during transition */
+  html #ns-journey-map .leaflet-marker-icon, 
+  html #ns-journey-map .leaflet-popup-content-wrapper,
+  html #ns-journey-map .leaflet-control-container {
+    /* We use 0.4s here as well so the pins stay in sync with the map color change */
+    transition: filter 0.4s ease;
+    filter: invert(100%) hue-rotate(-185deg) brightness(1.2) saturate(1) !important;
+  }
+
+  /* Cleanup for Popup Tip */
+  html[data-theme='dark'] .leaflet-popup-tip {
+    background-color: var(--bg-surface) !important;
+  }
+
+  /* base.css - Map Marker Styling */
+  .custom-marker {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .marker-pin {
+    width: 24px;
+    height: 24px;
+    border-radius: 50% 50% 50% 0;
+    transform: rotate(-45deg);
+    border: 2px solid white;
+  }
+
+  /* Ensure popups match our theme */
+  .leaflet-popup-content-wrapper {
+    background: var(--bg-surface);
+    color: var(--text-main);
+    border-radius: 0.75rem;
+    font-family: inherit;
+  }
+
+  .leaflet-popup-tip {
+    background: var(--bg-surface);
+  }
+
+  .form-input {
+    @apply w-full px-4 py-3 rounded-2xl border transition-all duration-200 outline-none;
+    background-color: var(--bg-main);
+    border-color: var(--border-main);
+    color: var(--text-main);
+  }
+
+  .form-input:focus {
+    /* Subtle blue glow using your brand-500 */
+    border-color: var(--brand-500);
+    box-shadow: 0 0 0 3px color-mix(in srgb, var(--brand-500), transparent 85%);
+  }
+
+  /* Placeholder color accessibility */
+  .form-input::placeholder {
+    color: var(--text-muted);
+    opacity: 0.6;
+  }
+  /* This wraps the icon and the input */
+  .input-icon-wrapper {
+    @apply relative flex items-center;
+  }
+
+  /* The icon itself */
+  .input-icon {
+    @apply absolute left-4 w-5 h-5 transition-colors duration-200;
+    color: var(--text-muted);
+  }
+
+  /* Modified input to accommodate the icon */
+  .form-input-with-icon {
+    @apply form-input pl-12; /* pl-12 pushes the text to the right of the icon */
+  }
+
+  /* Change icon color when the input is focused */
+  .input-icon-wrapper:focus-within .input-icon {
+    color: var(--brand-500);
+  }
+
+    /* Spinner Animation */
+  .spinner {
+    width: 40px;
+    height: 40px;
+    border: 4px solid var(--brand-100);
+    border-top: 4px solid var(--brand-500);
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+  }
+
+  @keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+  }
+}
+
+@layer utilities {
+  .animate-fade-in {
+    opacity: 0;
+    animation: fadeIn 0.8s ease-out forwards;
+  }
+
+  .animate-scroll-wheel {
+    animation: scrollWheel 2s infinite;
+  }
+
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  @keyframes scrollWheel {
+    0% {
+      opacity: 0;
+      transform: translateY(-8px);
+    }
+    20% {
+      opacity: 1;
+    }
+    80% {
+      opacity: 0;
+      transform: translateY(8px);
+    }
+    100% {
+      opacity: 0;
+    }
+  }
+}

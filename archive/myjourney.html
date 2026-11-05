@@ -1,0 +1,820 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Responsive Mock Page</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap"
+        rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
+
+    <style>
+        /* Variables */
+        :root {
+            --primary-color: #3C6FA5;
+            --secondary-color: #0F427A;
+            --text-color: #031427;
+            --alt-text-color: #FFFF;
+            --background-color: #FFFF;
+            --font-size-base: 16px;
+            --font-weight: 400;
+            --border-radius: 1.5rem;
+            --container-padding: 0.5rem;
+            --container-webpart-padding: 1rem;
+            --container-margins: 0.5rem;
+            --nav-toggler-icon-width: 1.5rem;
+            --container-webpart-margins: 1rem;
+            --smallest-screen-width: 328px;
+            --logo-width: 150px;
+        }
+
+        /* General Styles */
+        body {
+            display: flex;
+            flex-direction: column;
+            font-family: "Poppins", sans-serif;
+            font-size: var(--font-size-base);
+            font-weight: var(--font-weight);
+            min-height: 100vh;
+            overflow-x: hidden;
+            margin: 0;
+        }
+
+        header {
+            background-color: var(--background-color);
+            font-weight: 600;
+            width: 100%;
+        }
+
+        .navbar {
+            align-items: center;
+            position: relative;
+            z-index: 3;
+        }
+
+        .navbar-collapse {
+            text-align: left;
+        }
+
+        .nav-item {
+            white-space: nowrap;
+            margin: var(--container-margins);
+        }
+
+        .navbar-toggler-icon {
+            width: var(--nav-toggler-icon-width);
+            height: var(--nav-toggler-icon-height);
+        }
+
+        .logo {
+            width: var(--logo-width);
+            position: relative;
+            z-index: 1000;
+            margin: var(--container-margins);
+        }
+
+        #main {
+            display: flex;
+            flex-grow: 1;
+            background-image: url('images/NS-roads.png');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            min-height: calc(100vh - var(--header-height) - var(--footer-height));
+        }
+
+        #main-content-wrapper {
+            display: flex;
+            flex-wrap: wrap;
+            padding: var(--container-padding);
+            align-items: flex-start;
+            justify-content: flex-start;
+            width: 100%;
+        }
+
+        #left-container {
+            flex: 0 1 var(--smallest-screen-width);
+            margin: var(--container-webpart-margins);
+        }
+
+        #right-container {
+            flex: 1 1 auto;
+            display: flex;
+            align-items: flex-start;
+            justify-content: flex-start;
+            min-width: var(--smallest-screen-width);
+            margin: var(--container-webpart-margins) 0;
+            max-width: 40vw;
+        }
+
+        #webpart {
+            background: var(--background-color);
+            border-radius: var(--border-radius);
+            box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+            padding: var(--container-webpart-padding);
+            font-weight: 600;
+            width: 100%;
+            max-width: var(--smallest-screen-width);
+        }
+
+        #map {
+            width: 100%;
+            height: 400px;
+            min-height: var(--smallest-screen-width);
+            border-radius: var(--border-radius);
+        }
+
+        .title {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: var(--secondary-color);
+            margin-bottom: var(--container-margins);
+            text-align: center;
+        }
+
+        hr {
+            width: 100%;
+            border: none;
+            height: 1px;
+            background-color: var(--text-color);
+            margin: 1rem 0;
+        }
+
+        .form-label {
+            text-align: left;
+            margin-bottom: 0.25rem;
+            display: block;
+        }
+
+        .form-control {
+            background: transparent;
+            border: 1px solid var(--text-color);
+            border-radius: 8px;
+            box-shadow: none;
+            width: 100%;
+            padding: 0.5rem 0.75rem;
+            margin-bottom: 0.75rem;
+            box-sizing: border-box;
+        }
+
+        .form-control:focus {
+            box-shadow: none;
+            border-color: var(--primary-color);
+        }
+
+        .day-selector {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 0.25rem;
+            margin-top: 0.5rem;
+        }
+
+        .form-check {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 0;
+        }
+
+        .form-check-input {
+            width: 1.2rem;
+            height: 1.2rem;
+            margin-right: 0.5rem;
+            border: 1px solid var(--text-color);
+        }
+
+        .form-check-input:checked {
+            background-color: var(--primary-color);
+            border-color: var(--text-color);
+        }
+
+        .form-check-label {
+            color: #333;
+            margin-left: 0;
+        }
+
+        .btn-custom {
+            background-color: var(--primary-color);
+            color: var(--alt-text-color);
+            border: none;
+            padding: 0.75rem 1.5rem;
+            font-size: var(--font-size-base);
+            border-radius: var(--border-radius);
+            width: 100%;
+            max-width: 200px;
+            transition: background-color 0.3s ease-in-out;
+            text-align: center;
+            margin-top: var(--container-margins);
+            margin-bottom: var(--container-margins);
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .btn-custom:hover {
+            background-color: var(--secondary-color);
+            color: var(--alt-text-color);
+        }
+
+        .btn-custom-outline {
+            background-color: transparent;
+            color: var(--primary-color);
+            border: 2px solid var(--primary-color);
+        }
+
+        .btn-custom-outline:hover {
+            background-color: var(--primary-color);
+            color: var(--text-color);
+        }
+
+        .footer {
+            background-color: #333;
+            color: white;
+            padding: 2rem 0;
+            width: 100%;
+            box-sizing: border-box;
+            position: relative;
+            z-index: 1;
+            text-align: center;
+        }
+
+        .footer a {
+            color: white;
+            text-decoration: none;
+        }
+
+        .footer a:hover {
+            text-decoration: underline;
+        }
+
+        .footer-item {
+            margin-bottom: 1rem;
+        }
+
+        .footer-item.copyright {
+            text-align: center;
+
+        }
+
+        .footer-item.copyright > div {
+            margin-bottom: 0.5rem;
+        }
+
+        .footer-item.social-media {
+            text-align: right;
+            margin-bottom: 0.5rem;
+            padding-right: 25px;
+        }
+
+        .footer-item.social-media a {
+            display: inline-block;
+            margin-right: 0.5rem;
+        }
+
+        .footer-item.social-media img {
+            width: 24px;
+            height: 24px;
+            vertical-align: middle;
+        }
+
+        .footer-item.contact-info {
+            text-align: left;
+            border-left: 2px solid #fff;
+            padding-left: 35px;
+        }
+
+        .footer-item.contact-info h4 {
+            margin-bottom: 0.5rem;
+        }
+
+        /* Responsive Layout */
+        @media (max-width: 768px) {
+            #main {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            #left-container,
+            #right-container {
+                width: var(--smallest-screen-width);
+                margin: var(--container-margins);
+            }
+
+            #map {
+                height: var(--smallest-screen-width);
+                width: 100vw;
+            }
+
+            .footer {
+                text-align: left;
+            }
+
+            .footer-item {
+                text-align: center;
+            }
+        }
+
+        @media (min-width: 992px) {
+            .footer {
+                text-align: left;
+            }
+
+            .footer-item {
+                margin-bottom: 0;
+                text-align: left;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm">
+            <div class="container-fluid">
+                <a class="navbar-brand" href="index.html">
+                    <img src="images/logo.png" alt="NSCCJourney Logo" style="width: var(--logo-width);" />
+                </a>
+
+                <button
+                    class="navbar-toggler"
+                    type="button"
+                    data-bs-toggle="collapse"
+                    data-bs-target="#navbarMenu"
+                    aria-controls="navbarMenu"
+                    aria-expanded="false"
+                    aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <div class="collapse navbar-collapse" id="navbarMenu">
+                    <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+                        <li class="nav-item">
+                            <a class="nav-link" href="index.html">Home</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">About Us</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">Book a Ride</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#contact">Contact Us</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" id="sign_up" href="">Logout</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <main id="main">
+        <div id="main-content-wrapper" class="container-fluid d-flex justify-content-center align-items-center">
+            <div id="left-container">
+                <div id="webpart">
+                    <div class="title">My NSCC Journey</div>
+                    <hr>
+                    <form id="panel-1" style="display: block;">
+                        <input type="hidden" id="origin_objectid">
+                        <input type="hidden" id="destination_stop_id">
+                        <input type="hidden" id="route_id">
+                        <input type="hidden" id="meet_stop_id">
+
+                        <div class="mb-3">
+                            <input list="originList" class="form-control" id="origin_geoname" placeholder="Enter your NS community">
+                            <datalist id="originList"></datalist>
+
+                        </div>
+                        <div class="mb-3">
+                            <label for="origin_departure" class="form-label">Leaving Time</label>
+                            <input type="time" class="form-control" id="origin_departure">
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label">Leaving Days</label>
+                            <div class="day-selector">
+                                <div><input class="form-check-input" type="checkbox" id="Mon"><label class="form-check-label" for="Mon">Mon</label></div>
+                                <div><input class="form-check-input" type="checkbox" id="Tue"><label class="form-check-label" for="Tue">Tue</label></div>
+                                <div><input class="form-check-input" type="checkbox" id="Wed"><label class="form-check-label" for="Wed">Wed</label></div>
+                                <div><input class="form-check-input" type="checkbox" id="Thu"><label class="form-check-label" for="Thu">Thu</label></div>
+                                <div><input class="form-check-input" type="checkbox" id="Fri"><label class="form-check-label" for="Fri">Fri</label></div>
+                                <div><input class="form-check-input" type="checkbox" id="Sat"><label class="form-check-label" for="Sat">Sat</label></div>
+                                <div><input class="form-check-input" type="checkbox" id="Sun"><label class="form-check-label" for="Sun">Sun</label></div>
+                            </div>
+                        </div>
+                    </form>
+                    <form id="panel-2" style="display: none;">
+                        <div class="mb-3">
+                            <label for="nscc_stop" class="form-label">Arriving Campus</label>
+                            <input list="campusList" class="form-control" id="nscc_stop" placeholder="Type the name of your campus:">
+                            <datalist id="campusList"></datalist>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="nscc_departure" class="form-label">Arrival Time</label>
+                            <input type="text" class="form-control" id="nscc_departure">
+                        </div>
+
+                        
+                    </form>
+                    <form id="panel-3" style="display: none;">
+                        <div class="mb-3">
+                            <label for="stop" class="form-label">Meet Me Location</label>
+                            <select class="form-select" id="stop">
+                                <option value="">Car Pool or Pick-Up Location</option>
+                                <option value="stop1">Meet me Stop 1 from API Server</option>
+                                <option value="stop2">Meet me Stop 2 from API Server</option>
+                                <option value="stop3">Meet me Stop 3 from API Server</option>
+                            </select>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="stop_arrive_time" class="form-label">Estimated Meet-Me Time</label>
+                            <input type="text" class="form-control" id="stop_arrive_time" value="Calculated From API"
+                                readonly>
+                        </div>
+                    </form>
+                    <form id="panel-4" style="display: none;">
+                        <div class="row mb-3">
+                            <div class="col-md-6">
+                                <label for="start_date" class="form-label">Journey Start Date</label>
+                                <input type="date" class="form-control" id="start_date">
+                            </div>
+                            <div class="col-md-6">
+                                <label for="end_date" class="form-label">Journey End Date</label>
+                                <input type="date" class="form-control" id="end_date">
+                            </div>
+                        </div>
+                    </form>
+                    <div class="text-center">
+                        <button id="next-button" type="button" onclick="nextPanel()" class="btn btn-custom">Next</button>
+                    </div>
+                </div>
+            </div>
+            <div id="right-container">
+                <div id="map"></div>
+            </div>
+        </div>
+    </main>
+
+    <footer class="footer" id="contact">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-6 footer-item copyright">
+                    <div>
+                        <div>Copyright © 2025 NSCC JOURNEY. All rights reserved.</div>
+                        <div id="section2">
+                            <a href="#" class="privacy_policy">Privacy Policy</a> |
+                            <a href="#" class="use_of_cookies">Use of Cookies</a> |
+                            <a href="#" class="terms_of_use">Terms of Use</a> |
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-6 footer-item footer_socials_contact pt-lg-0 pt-2">
+                    <div class="row">
+                        <div class="col-md-6 footer-item social-media">
+                            <a href="#" class="instagram"><img src="images/instagram.png" alt="Instagram"></a>
+                            <a href="#" class="youtube"><img src="images/youtube.png" alt="YouTube"></a>
+                            <a href="#" class="linkedin"><img src="images/linkedin.png" alt="LinkedIn"></a>
+                        </div>
+                        <div class="col-md-6 footer-item contact-info" id="email_phone">
+                            <h4>Contact Us</h4>
+                            <p>Email: <a href="mailto:contact-nsccride@nroute.com">contact@nsccjourney.com</a></p>
+                            <p>Phone: 902-502-5555</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+    <script>
+  // ==========================
+  // Config
+  // ==========================
+  const API_BASE = "http://localhost:8000/api/v1";
+
+  // If you are using JWT auth, store token in localStorage as "access_token"
+  // localStorage.setItem("access_token", "<jwt>");
+  function headersJson(withAuth = false) {
+    const h = { "Content-Type": "application/json" };
+    if (withAuth) {
+      const token = localStorage.getItem("access_token");
+      if (token) h["Authorization"] = `Bearer ${token}`;
+    }
+    return h;
+  }
+
+  function setHidden(id, value) {
+    document.getElementById(id).value = value ?? "";
+  }
+  function getHidden(id) {
+    return document.getElementById(id).value;
+  }
+
+  function getDaysPayload() {
+    return {
+      monday: document.getElementById("Mon").checked,
+      tuesday: document.getElementById("Tue").checked,
+      wednesday: document.getElementById("Wed").checked,
+      thursday: document.getElementById("Thu").checked,
+      friday: document.getElementById("Fri").checked,
+      saturday: document.getElementById("Sat").checked,
+      sunday: document.getElementById("Sun").checked,
+    };
+  }
+
+  // ==========================
+  // Leaflet map init (missing in your pasted version)
+  // ==========================
+  const map = L.map("map").setView([45.49951, -63.00394], 7);
+  L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+    attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+  }).addTo(map);
+
+  let stopsLayer = L.layerGroup().addTo(map);
+
+  function clearStops() {
+    stopsLayer.clearLayers();
+  }
+
+  function drawStops(stops) {
+    clearStops();
+    stops.forEach(s => {
+      L.marker([s.stop_lat, s.stop_lon])
+        .addTo(stopsLayer)
+        .bindPopup(`<b>${s.stop_name}</b><br>${s.stop_category}<br>${s.distance_km} km`);
+    });
+  }
+
+  // ==========================
+  // Panel visibility helper
+  // ==========================
+  const panels = ["panel-1", "panel-2", "panel-3", "panel-4"];
+  function showPanel(id) {
+    panels.forEach(pid => {
+      document.getElementById(pid).style.display = (pid === id) ? "block" : "none";
+    });
+
+    const btn = document.getElementById("next-button");
+    btn.textContent = (id === "panel-4") ? "Save" : "Next";
+  }
+
+  function getCurrentPanelIndex() {
+    return panels.findIndex(pid => document.getElementById(pid).style.display === "block");
+  }
+
+  // ==========================
+  // Autocomplete (Origins + Destinations)
+  // NOTE: your API example shows pagination; we use results[]
+  // ==========================
+  async function fetchPaged(url) {
+    const res = await fetch(url);
+    if (!res.ok) throw new Error(`HTTP ${res.status}`);
+    return res.json();
+  }
+
+  // Origins: /stn/GetOrigin
+  async function updateOriginList() {
+    const q = document.getElementById("origin_geoname").value.trim();
+    if (q.length < 2) return;
+
+    // Your filterset may not support search; we still load page 1 and filter client-side
+    const data = await fetchPaged(`${API_BASE}/stn/GetOrigin?ordering=geoname`);
+    const items = (data.results || [])
+      .filter(o => (o.geoname || "").toLowerCase().includes(q.toLowerCase()))
+      .slice(0, 10);
+
+    const dl = document.getElementById("originList");
+    dl.innerHTML = "";
+    items.forEach(o => {
+      const opt = document.createElement("option");
+      opt.value = `${o.geoname} (${o.county}) (#${o.objectid})`;
+      dl.appendChild(opt);
+    });
+  }
+
+  function parseOriginObjectId(text) {
+    const m = text.match(/\(#(\d+)\)\s*$/);
+    return m ? parseInt(m[1], 10) : null;
+  }
+
+  document.getElementById("origin_geoname").addEventListener("input", () => {
+    updateOriginList().catch(console.error);
+    const objectid = parseOriginObjectId(document.getElementById("origin_geoname").value);
+    if (objectid) setHidden("origin_objectid", objectid);
+  });
+
+  // Destinations: /stn/GetDestinations
+  async function updateCampusList() {
+    const q = document.getElementById("nscc_stop").value.trim();
+    if (q.length < 2) return;
+
+    const data = await fetchPaged(`${API_BASE}/stn/GetDestinations?ordering=stop_name`);
+    const items = (data.results || [])
+      .filter(s => (s.stop_name || "").toLowerCase().includes(q.toLowerCase()))
+      .slice(0, 10);
+
+    const dl = document.getElementById("campusList");
+    dl.innerHTML = "";
+    items.forEach(s => {
+      const opt = document.createElement("option");
+      opt.value = `${s.stop_name} (${s.stop_id})`;
+      dl.appendChild(opt);
+    });
+  }
+
+  function parseStopId(text) {
+    const m = text.match(/\(([^)]+)\)\s*$/);
+    return m ? m[1] : null;
+  }
+
+  document.getElementById("nscc_stop").addEventListener("input", () => {
+    updateCampusList().catch(console.error);
+    const stopId = parseStopId(document.getElementById("nscc_stop").value);
+    if (stopId) setHidden("destination_stop_id", stopId);
+  });
+
+  // ==========================
+  // API flow (Panels 2->3, 3->4, 4 Save)
+  // ==========================
+  async function createRouteAndSuggestions() {
+    const origin_objectid = parseInt(getHidden("origin_objectid"), 10);
+    const destination_stop_id = getHidden("destination_stop_id");
+
+    if (!origin_objectid) throw new Error("origin_objectid missing");
+    if (!destination_stop_id) throw new Error("destination_stop_id missing");
+
+    const res = await fetch(`${API_BASE}/gtfs/routes/`, {
+      method: "POST",
+      headers: headersJson(true),
+      body: JSON.stringify({
+        origin_objectid,
+        destination_stop_id,
+        route_short_name: "Journey"
+      })
+    });
+
+    if (!res.ok) {
+      const err = await res.text();
+      throw new Error(`Route create failed: ${err}`);
+    }
+
+    const data = await res.json();
+
+    // Expecting:
+    // data.route.route_id
+    // data.suggested_meet_stops[]
+    setHidden("route_id", data.route?.route_id || "");
+
+    const stops = data.suggested_meet_stops || [];
+    populateMeetStopSelect(stops);
+    drawStops(stops);
+
+    return data;
+  }
+
+  function populateMeetStopSelect(stops) {
+    const select = document.getElementById("stop");
+    select.innerHTML = `<option value="">Car Pool or Pick-Up Location</option>`;
+
+    stops.forEach(s => {
+      const opt = document.createElement("option");
+      opt.value = s.stop_id;
+      opt.textContent = `${s.stop_name} (${s.distance_km} km)`;
+      select.appendChild(opt);
+    });
+  }
+
+  document.getElementById("stop").addEventListener("change", (e) => {
+    setHidden("meet_stop_id", e.target.value);
+  });
+
+  async function selectMeetStop() {
+    const route_id = getHidden("route_id");
+    const meet_stop_id = getHidden("meet_stop_id");
+    const destination_stop_id = getHidden("destination_stop_id");
+
+    if (!route_id) throw new Error("route_id missing");
+    if (!meet_stop_id) throw new Error("meet_stop_id missing");
+
+    const res = await fetch(
+      `${API_BASE}/gtfs/routes/${encodeURIComponent(route_id)}/select-meet-stop/?destination_stop_id=${encodeURIComponent(destination_stop_id)}`,
+      {
+        method: "POST",
+        headers: headersJson(true),
+        body: JSON.stringify({ meet_stop_id })
+      }
+    );
+
+    if (!res.ok) {
+      const err = await res.text();
+      throw new Error(`Select meet stop failed: ${err}`);
+    }
+
+    return res.json();
+  }
+
+  async function createSchedule() {
+    const route_id = getHidden("route_id");
+    const depart_time = document.getElementById("origin_departure").value;
+    const start_date = document.getElementById("start_date").value;
+    const end_date = document.getElementById("end_date").value;
+
+    if (!route_id) throw new Error("route_id missing");
+    if (!depart_time) throw new Error("depart_time missing");
+    if (!start_date || !end_date) throw new Error("start_date/end_date missing");
+
+    const payload = {
+      route_id,
+      depart_time,
+      start_date,
+      end_date,
+      ...getDaysPayload(),
+      dwell_minutes_at_meet: 0
+    };
+
+    const res = await fetch(`${API_BASE}/gtfs/schedules/`, {
+      method: "POST",
+      headers: headersJson(true),
+      body: JSON.stringify(payload)
+    });
+
+    if (!res.ok) {
+      const err = await res.text();
+      throw new Error(`Schedule create failed: ${err}`);
+    }
+
+    return res.json();
+  }
+
+  // ==========================
+  // Main Next button logic
+  // ==========================
+  window.nextPanel = async function () {
+    const idx = getCurrentPanelIndex();
+
+    try {
+      // Panel 1 -> Panel 2
+      if (idx === 0) {
+        const origin_objectid = parseInt(getHidden("origin_objectid"), 10);
+        if (!origin_objectid) {
+          alert("Please select an Origin from the list first.");
+          return;
+        }
+        showPanel("panel-2");
+        return;
+      }
+
+      // Panel 2 -> Panel 3 (create route + suggested stops)
+      if (idx === 1) {
+        const destination_stop_id = getHidden("destination_stop_id");
+        if (!destination_stop_id) {
+          alert("Please select a Destination campus from the list first.");
+          return;
+        }
+
+        await createRouteAndSuggestions();
+        showPanel("panel-3");
+        return;
+      }
+
+      // Panel 3 -> Panel 4 (persist meet stop selection)
+      if (idx === 2) {
+        const meet_stop_id = getHidden("meet_stop_id");
+        if (!meet_stop_id) {
+          alert("Please select a Meet-Me stop first.");
+          return;
+        }
+
+        await selectMeetStop();
+        showPanel("panel-4");
+        return;
+      }
+
+      // Panel 4 Save
+      if (idx === 3) {
+        const data = await createSchedule();
+        alert(`Saved!\nTrip: ${data.trip_id}\nService: ${data.service_id}`);
+        return;
+      }
+
+    } catch (e) {
+      console.error(e);
+      alert(e.message || "An error occurred. Check console.");
+    }
+  };
+</script>
+
+
+</body>
+
+</html>

@@ -1,0 +1,71 @@
+#main {
+  background-color: var(--main-bg);
+}
+  
+.maincontainer {
+  width: 100%;
+}
+
+.herocontainer {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+
+}
+
+.learnmorecontainer {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  margin-top: var(--container-margin);
+}
+
+button {
+  font-family: inherit;
+  font-size: calc(0.75rem + .55vw);
+  font-weight: 700;
+  color: var(--background-color);
+  text-align: center;
+  text-decoration: none;
+  padding-left: calc(0.5rem + .25vw);
+  padding-right: calc(0.5rem + .25vw);
+  cursor: pointer;
+  /* Border */
+  border-style: solid;
+  border-radius: calc(0.5rem + .25vw);
+  border-color: var(--primary-color); 
+  border-width: calc(0.25rem + .1vw);
+}
+
+.button1 {
+  background-color: var(--secondary-color);
+  border-color: var(--primary-color);
+  color: var(--background-color);
+  width:fit-content;
+}
+
+.button1:hover {
+  color: var(--accent-color); 
+  background-color: var(--secondary-color);
+  border-color: var(--primary-color);
+  
+}
+
+.button2 {
+  background-color: var(--background-color); 
+  color: var(--text-color);
+  width: fit-content; 
+  
+}
+
+.button2:hover {
+  background-color: var(--secondary-color);
+  border-color: var(--primary-color);
+  color: var(--accent-color);
+}
+
+
+  
+  
+  
