@@ -63,7 +63,7 @@ export async function injectPart(slotId, path) {
     const timeoutId = setTimeout(() => controller.abort(), 5000);
 
     const cleanPath = path.startsWith('/') ? path.substring(1) : path;
-    const response = await fetch(`./${cleanPath}`, { signal: controller.signal });
+    const response = await fetch(`/${cleanPath}`, { signal: controller.signal });
     
     clearTimeout(timeoutId);
 
@@ -104,7 +104,10 @@ export function initNavigation(callback) {
     const link = e.target.closest('a');
     // Check if it's a valid link and internal (same domain)
     // and NOT a hash-link (which the browser handles for scrolling)
-    if (link && link.href.startsWith(window.location.origin) && !link.hash) {
+    if (link && new URL(link.href).origin === window.location.origin && !link.hash &&
+        !e.defaultPrevented && e.button === 0 && !e.ctrlKey && !e.metaKey &&
+        !e.shiftKey && !e.altKey && !link.hasAttribute('download') &&
+        (!link.target || link.target === '_self')) {
       e.preventDefault();
       window.history.pushState({}, '', link.href);
       // Professional Touch: Scroll to top on route change

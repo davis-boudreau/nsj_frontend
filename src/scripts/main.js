@@ -16,11 +16,17 @@ import {
 import { initNSMap } from './modules/map.js';
 
 async function bootstrap() {
-  const path = window.location.pathname;
+  const path = window.location.pathname.replace(/\/+$/, '') || '/';
   
   // 1. Define your valid routes
   const isHome = path === '/' || path === '/index.html' || path === '';
-  const isLogin = path.includes('login');
+  const isLogin = path === '/login';
+  const pages = {
+    '/myjourney': ['myjourney', 'My Journey'],
+    '/learnmore': ['learnmore', 'Learn More'],
+    '/join': ['join', 'Join'],
+    '/reset-password': ['reset-password', 'Password Help'],
+  };
 
   // 2. Clear previous content and load the Shell (if needed)
   // For the 404 or Home, we usually want the standard layout container
@@ -51,6 +57,11 @@ async function bootstrap() {
       setTimeout(() => window.dispatchEvent(new Event('resize')), 200);
     }
   }
+  else if (pages[path]) {
+    const [file, title] = pages[path];
+    await injectPart('main-content', `webparts/pages/${file}.html`);
+    document.title = `${title} | NS Journey`;
+  }
   else {
     // 404 CONDITION: No route matched
     await handle404();
@@ -61,6 +72,9 @@ async function bootstrap() {
   updateActiveLinks();
   
   setupMobileMenu(); 
+  if (window.location.hash) {
+    document.getElementById(window.location.hash.slice(1))?.scrollIntoView();
+  }
 }
 
 /**
