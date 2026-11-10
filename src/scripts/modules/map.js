@@ -1,47 +1,74 @@
 import L from 'leaflet';
+import { maplibreGL } from '@maplibre/maplibre-gl-leaflet';
+import { setWorkerUrl } from 'maplibre-gl';
+import workerUrl from 'maplibre-gl/dist/maplibre-gl-worker.mjs?worker&url';
 import 'leaflet/dist/leaflet.css';
+import 'maplibre-gl/dist/maplibre-gl.css';
+import { themedMapStyle } from './map-style.js';
 
-let mapInstance = null; // Track the map globally in this module
+setWorkerUrl(workerUrl);
+let mapInstance = null;
+let vectorMap = null;
+let styleReady = false;
+let resizeTimer;
 
-// modules/map.js
+function currentStyle() {
+  const css = getComputedStyle(document.documentElement);
+  return themedMapStyle(name => css.getPropertyValue(name).trim());
+}
 
-window.addEventListener('themeChanged', () => {
-  // Simplest way: Re-init the map or swap the tile layer
-  // For an SPA, calling initNSMap() again (after clearing the old map) works best.
-  if (document.getElementById('ns-journey-map')) {
-     // Logic to remove old map instance and re-init
+function applyMapTheme() {
+  if (!vectorMap || !styleReady) return;
+  for (const layer of currentStyle().layers) {
+    for (const [property, value] of Object.entries(layer.paint || {})) {
+      vectorMap.setPaintProperty(layer.id, property, value);
+    }
   }
-});
+}
 
-// modules/map.js
+window.addEventListener('themeChanged', applyMapTheme);
 
-/**
- * modules/map.js
- * Handles Leaflet initialization and theme-aware marker rendering
- */
+export function destroyNSMap() {
+  clearTimeout(resizeTimer);
+  mapInstance?.remove();
+  mapInstance = null;
+  vectorMap = null;
+  styleReady = false;
+}
 
 export function initNSMap(mapData = []) {
-  // 1. Target the actual map ID, not the text container
+  destroyNSMap();
   const mapElement = document.getElementById('ns-journey-map');
   if (!mapElement) return;
 
-  // 2. Clear existing instance for SPA navigation
-  if (mapElement._leaflet_id) {
-    mapElement._leaflet_id = null;
-    mapElement.innerHTML = "";
-  }
-
-  const map = L.map('ns-journey-map', {
+  const map = mapInstance = L.map(mapElement, {
     scrollWheelZoom: false,
     zoomControl: true,
     dragging: !L.Browser.mobile,
-    tap: !L.Browser.mobile
+    maxZoom: 18,
   }).setView([45.0, -63.0], 7);
 
-  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-    maxZoom: 18,
-    attribution: '&copy; OpenStreetMap'
-  }).addTo(map);
+  try {
+    const layer = maplibreGL({
+      style: currentStyle(),
+      attribution: '<a href="https://openfreemap.org/">OpenFreeMap</a> | ' +
+        '<a href="https://www.openmaptiles.org/">OpenMapTiles</a> | ' +
+        '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>',
+    }).addTo(map);
+    vectorMap = layer.getMaplibreMap();
+    // A theme may change while the initial style is still loading.
+    vectorMap.on('style.load', () => {
+      styleReady = true;
+      applyMapTheme();
+    });
+  } catch (error) {
+    console.error('Vector basemap could not start', error);
+    const message = document.createElement('p');
+    message.className = 'map-error';
+    message.setAttribute('role', 'status');
+    message.textContent = 'The map could not load. Check that WebGL is enabled in your browser.';
+    mapElement.append(message);
+  }
 
   // Icons (keep your existing var(--primary) and var(--accent) logic)
   const nsccIcon = L.divIcon({
@@ -62,12 +89,18 @@ export function initNSMap(mapData = []) {
     mapData.forEach(point => {
       L.marker([point.lat, point.lng], { icon: point.type === 'nscc' ? nsccIcon : communityIcon })
         .addTo(map)
-        .bindPopup(`<strong>${point.title}</strong><br>${point.desc}`);
+        .bindPopup(() => {
+          const popup = document.createElement('div');
+          const title = document.createElement('strong');
+          title.textContent = point.title;
+          popup.append(title, document.createElement('br'), document.createTextNode(point.desc || ''));
+          return popup;
+        });
     });
   } else {
     // Your default "Discovery" markers
     L.marker([44.6510, -63.5827], { icon: nsccIcon }).addTo(map).bindPopup(`Default Point`);
   }
 
-  setTimeout(() => map.invalidateSize(), 250);
+  resizeTimer = setTimeout(() => map.invalidateSize(), 250);
 }

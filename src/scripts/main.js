@@ -13,9 +13,10 @@ import {
   updateActiveLinks
 } from './core/base.js';
 
-import { initNSMap } from './modules/map.js';
+import { initNSMap, destroyNSMap } from './modules/map.js';
 
 async function bootstrap() {
+  destroyNSMap();
   const path = window.location.pathname.replace(/\/+$/, '') || '/';
   
   // 1. Define your valid routes

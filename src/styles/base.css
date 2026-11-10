@@ -28,6 +28,15 @@ html {
     --neutral-800: #1e293b;
     --neutral-950: #020617;
 
+    /* Map hues stay fixed between themes; only lightness changes. */
+    --map-water: hsl(208, 45%, 82%);
+    --map-green: hsl(135, 22%, 82%);
+    --map-land: hsl(35, 25%, 91%);
+    --map-building: hsl(35, 20%, 78%);
+    --map-road: hsl(35, 30%, 98%);
+    --map-boundary: hsl(35, 15%, 64%);
+    --map-label: hsl(208, 30%, 24%);
+
     /* Semantic Mappings */
     --bg-main: var(--neutral-0);
     --bg-surface: #ffffff;
@@ -41,6 +50,14 @@ html {
   }
 
   [data-theme='dark'] {
+    --map-water: hsl(208, 45%, 18%);
+    --map-green: hsl(135, 22%, 18%);
+    --map-land: hsl(35, 25%, 16%);
+    --map-building: hsl(35, 20%, 25%);
+    --map-road: hsl(35, 30%, 38%);
+    --map-boundary: hsl(35, 15%, 32%);
+    --map-label: hsl(208, 30%, 86%);
+
     --bg-footer: var(--neutral-950);
     --bg-main: var(--neutral-950);
     --bg-surface: var(--neutral-800);
@@ -291,23 +308,14 @@ html {
     width: 100%;
     border-radius: 1.5rem;
     /* Use transparent or var(--bg-main) so it never flashes a different color */
-    background-color: var(--bg-main); 
+    background-color: var(--map-land); 
     /* Match the body's transition speed exactly (300ms from your body tag) */
-    transition: filter 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+    transition: background-color 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
     overflow: hidden;
     position: relative;
     z-index: 1;
     box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
     margin-bottom: 2rem; /* Adds a bit of breathing room before the footer divider */
-  }
-
-  /* 3. The Map Filters (Refined for your 90% Invert style) */
-  html[data-theme='light'] #ns-journey-map {
-    filter: invert(90%) sepia(16%) hue-rotate(185deg) brightness(1.75) contrast(1.25) saturate(2) !important;
-  }
-
-  html[data-theme='dark'] #ns-journey-map {
-    filter: invert(90%) sepia(16%) hue-rotate(188deg) brightness(1.25) contrast(1.25) saturate(1.5) !important;
   }
 
   /* 4. Fix for the 'Line' between sections */
@@ -317,19 +325,14 @@ html {
     outline: none !important;
   }
 
-  /* --- UI PROTECTION --- */
-  /* Targeting specifically to ensure pins don't look 'broken' during transition */
-  html #ns-journey-map .leaflet-marker-icon, 
-  html #ns-journey-map .leaflet-popup-content-wrapper,
-  html #ns-journey-map .leaflet-control-container {
-    /* We use 0.4s here as well so the pins stay in sync with the map color change */
-    transition: filter 0.4s ease;
-    filter: invert(100%) hue-rotate(-185deg) brightness(1.2) saturate(1) !important;
-  }
-
-  /* Cleanup for Popup Tip */
-  html[data-theme='dark'] .leaflet-popup-tip {
-    background-color: var(--bg-surface) !important;
+  .map-error {
+    position: absolute;
+    z-index: 500;
+    inset: 4rem 1rem auto;
+    padding: 1rem;
+    background: var(--bg-surface);
+    color: var(--text-main);
+    border-radius: 0.75rem;
   }
 
   /* base.css - Map Marker Styling */
@@ -445,4 +448,19 @@ html {
       opacity: 0;
     }
   }
+}
+
+/* Leaflet ships unlayered CSS, so these overrides must also be unlayered. */
+#ns-journey-map .leaflet-control-zoom a,
+#ns-journey-map .leaflet-control-attribution,
+#ns-journey-map .leaflet-popup-content-wrapper,
+#ns-journey-map .leaflet-popup-tip {
+  background: var(--bg-surface);
+  color: var(--text-main);
+}
+
+#ns-journey-map .leaflet-control-attribution a {
+  color: var(--primary);
+  font-size: inherit;
+  line-height: inherit;
 }
