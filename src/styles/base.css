@@ -41,6 +41,7 @@ html {
   }
 
   [data-theme='dark'] {
+    --bg-footer: var(--neutral-950);
     --bg-main: var(--neutral-950);
     --bg-surface: var(--neutral-800);
     --text-main: var(--neutral-100);
@@ -123,20 +124,23 @@ html {
     opacity: 1;
   }
 
-   footer {
-    background-color: var(--brand-950);
+  footer {
+    background-color: var(--bg-footer);
     color: white;
   }
 
   [data-theme='dark'] footer {
-    background-color: var(--neutral-950);
     border-top: 1px solid var(--neutral-800);
   }
 
   footer h1, footer h2, footer h3, footer p { color: white !important; }
   footer a {
-    color: var(--brand-100) !important;
-    @apply hover:text-white transition-colors;
+    color: var(--brand-100);
+    @apply transition-colors;
+  }
+  footer a:hover, footer a:focus-visible {
+    color: white;
+    text-decoration: underline;
   }
   footer .text-ui-muted { color: var(--brand-300) !important; }
 

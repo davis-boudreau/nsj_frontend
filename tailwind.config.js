@@ -11,6 +11,7 @@ export default {
         brand: {
           primary: withOpacity("--brand-500"), 
           100: withOpacity("--brand-100"),
+          300: withOpacity("--brand-300"),
           500: withOpacity("--brand-500"),
           700: withOpacity("--brand-700"),
         },
